@@ -1,65 +1,111 @@
-import Image from "next/image";
+import Link from "next/link";
+import { BottomNav } from "@/components/BottomNav";
 
-export default function Home() {
+export default function Dashboard() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <div className="fixed top-[-10%] left-[-20%] w-[80%] h-[60%] mystic-glow rounded-full pointer-events-none"></div>
+      <div className="fixed bottom-[-10%] right-[-20%] w-[80%] h-[60%] mystic-glow rounded-full pointer-events-none"></div>
+
+      <div className="relative z-10 flex flex-col min-h-screen max-w-md mx-auto px-6 pb-32">
+        <header className="flex justify-between items-center pt-8 pb-10">
+          <div className="flex flex-col">
+            <h1 className="text-gradient text-2xl font-extrabold tracking-tight">La Presencia</h1>
+            <p className="text-[8px] tracking-[0.2em] uppercase font-light text-slate-400">Santuario de Bienestar</p>
+          </div>
+          <Link href="/perfil" className="px-5 py-2 rounded-full border border-primary/30 bg-primary/10 text-slate-100 text-xs font-medium active:scale-95 transition-all">
+            Mi Perfil
+          </Link>
+        </header>
+
+        <main className="flex flex-col gap-5">
+          {/* Daily Quote */}
+          <section className="glass-card shimmer-effect iridescent-border rounded-2xl p-6 text-center">
+            <div className="absolute -top-2 -left-2 opacity-5 pointer-events-none">
+              <span className="material-symbols-outlined text-6xl text-primary">format_quote</span>
+            </div>
+            <h3 className="text-[9px] tracking-[0.3em] uppercase font-bold text-primary/90 mb-3">Cita del Día</h3>
+            <p className="font-serif text-lg leading-relaxed text-slate-100 italic px-2 mb-2">
+              "El dolor es inevitable, el sufrimiento es optativo"
+            </p>
+            <cite className="text-[9px] uppercase tracking-widest text-slate-500 not-italic">— Buda</cite>
+          </section>
+
+          {/* Japa Mala */}
+          <Link href="/japamala" className="glass-card shimmer-effect iridescent-border rounded-2xl overflow-hidden group h-48 block cursor-pointer">
+            <img alt="Japa Mala" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjlm8tCQWnRn8P--lvkFYwDd2co4XzZ3Hm3EqhkZMxPp0SPQqd5ecgbit8jnyVjbEHDx_8-8NkRnNm4W4O0X9RIEEMB63rlcttfghEoBEh4eoE0G1e3sx4GBzeEG495nXpWYM8GZavsGAAjcYJIiAmdOkKU6nNyn6CRjcr-9r4HsOviLiD-zPh7xKL7PcfBheb-K0wSdDegU_z2V4A1yDqxq2sjMkRbHedlH9gfz36bAwxxQoRuEA0X6AYhyjqd2c2FBcAW92M_2YH" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-primary/5 mix-blend-overlay"></div>
+            <div className="absolute bottom-0 left-0 p-6 w-full flex justify-between items-end">
+              <div>
+                <h2 className="font-serif text-2xl text-white">El Arte de Ver a Dios</h2>
+                <p className="text-slate-300 text-xs font-light">Práctica Sagrada de Japa Mala</p>
+              </div>
+              <div className="bg-primary/40 backdrop-blur-xl p-3 rounded-full border border-white/20 shadow-lg">
+                <span className="material-symbols-outlined text-white text-2xl">self_improvement</span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Library Link */}
+          <Link href="/biblioteca" className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 flex items-center gap-5 active:bg-white/5 transition-colors cursor-pointer">
+            <div className="bg-primary/10 w-14 h-14 rounded-2xl flex items-center justify-center border border-primary/20">
+              <span className="material-symbols-outlined text-primary text-2xl">local_library</span>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-base">Meditaciones</h3>
+              <p className="text-[11px] text-slate-500 uppercase tracking-wider">Biblioteca de Sabiduría</p>
+            </div>
+            <span className="material-symbols-outlined text-slate-600">chevron_right</span>
+          </Link>
+
+          {/* Journal Link */}
+          <Link href="/diario" className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 flex items-center gap-5 active:bg-white/5 transition-colors cursor-pointer">
+            <div className="bg-primary/10 w-14 h-14 rounded-2xl flex items-center justify-center border border-primary/20">
+              <span className="material-symbols-outlined text-primary text-2xl">auto_stories</span>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-base">Diario &amp; IA</h3>
+              <p className="text-[11px] text-slate-500 uppercase tracking-wider">Tu Oráculo Interior</p>
+            </div>
+            <span className="material-symbols-outlined text-slate-600">chevron_right</span>
+          </Link>
+
+          {/* Binaural Player */}
+          <Link href="/sonidos" className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 flex items-center gap-5 active:bg-white/5 transition-colors cursor-pointer">
+            <div className="bg-primary/10 w-14 h-14 rounded-full flex items-center justify-center border border-primary/20">
+              <span className="material-symbols-outlined text-primary text-2xl">graphic_eq</span>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-base">Sonidos Binaurales</h3>
+              <p className="text-[11px] text-slate-500 uppercase tracking-wider">Frecuencias de Sanación</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-primary/80">play_circle</span>
+            </div>
+          </Link>
+
+          {/* Team / Gratitude (Replaced Team with Gratitude to maintain parity) */}
+          <Link href="/gratitud" className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 flex items-center gap-5 active:bg-white/5 transition-colors cursor-pointer">
+            <div className="bg-primary/10 w-14 h-14 rounded-full flex items-center justify-center border border-primary/20 overflow-hidden">
+              <span className="material-symbols-outlined text-primary text-2xl">favorite</span>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-base">Gratitud</h3>
+              <p className="text-[11px] text-slate-500 uppercase tracking-wider">Diario de 28 Días</p>
+            </div>
+            <span className="material-symbols-outlined text-slate-600">chevron_right</span>
+          </Link>
+        </main>
+
+        <footer className="mt-16 mb-8 text-center">
+          <p className="text-slate-700 text-[9px] tracking-[0.4em] uppercase font-bold">
+            Inner Path | Santuario de Bienestar
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        </footer>
+      </div>
+
+      <BottomNav />
+    </>
   );
 }
