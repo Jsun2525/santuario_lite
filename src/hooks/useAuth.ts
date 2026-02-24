@@ -1,48 +1,54 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
-export interface MockUser {
-    id: string;
-    email: string;
-    name: string;
-}
+import { supabase } from "@/lib/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 export function useAuth() {
-    const [user, setUser] = useState<MockUser | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchUser = async () => {
-            // MVP: Simulate local storage user session or auto-login guest
-            const stored = localStorage.getItem("inner_path_user");
-            if (stored) {
-                setUser(JSON.parse(stored));
-            } else {
-                const guestUser = { id: "guest-" + Date.now(), email: "guest@innerpath.app", name: "Viajero" };
-                localStorage.setItem("inner_path_user", JSON.stringify(guestUser));
-                setUser(guestUser);
-            }
+        // Fetch current session on mount
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setUser(session?.user ?? null);
             setLoading(false);
-        };
+        });
 
-        fetchUser();
+        // Listen for auth changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+            setLoading(false);
+        });
+
+        return () => subscription.unsubscribe();
     }, []);
 
-    const signIn = async (email: string, pass: string): Promise<{ error: Error | null }> => {
-        // Simulate network
-        await new Promise(r => setTimeout(r, 600));
-        const user = { id: "local-" + Date.now(), email, name: email.split("@")[0] };
-        localStorage.setItem("inner_path_user", JSON.stringify(user));
-        setUser(user);
-        return { error: null };
+    const signIn = async (email: string, pass: string) => {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password: pass,
+        });
+        return { error };
     };
 
     const signOut = async () => {
-        localStorage.removeItem("inner_path_user");
-        setUser(null);
-        return { error: null };
+        const { error } = await supabase.auth.signOut();
+        return { error };
     };
 
-    return { user, loading, signIn, signOut };
+    const signUp = async (email: string, pass: string, name: string) => {
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password: pass,
+            options: {
+                data: {
+                    full_name: name,
+                },
+            },
+        });
+        return { error };
+    };
+
+    return { user, loading, signIn, signOut, signUp };
 }

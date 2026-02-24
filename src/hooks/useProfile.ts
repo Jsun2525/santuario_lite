@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase/client';
+import { useAuth } from './useAuth';
 
 export interface SpiritualProfile {
     name: string;
@@ -10,6 +12,7 @@ export interface SpiritualProfile {
 }
 
 export function useProfile() {
+    const { user } = useAuth();
     const [profile, setProfile] = useState<SpiritualProfile>({
         name: 'Buscador Espiritual',
         level: 'Iniciado',
@@ -20,20 +23,34 @@ export function useProfile() {
     });
 
     useEffect(() => {
-        // Load aggregated stats from localStorage for MVP rendering
-        const journals = JSON.parse(localStorage.getItem('innerpath_journal') || '[]');
-        const malaLogs = JSON.parse(localStorage.getItem('innerpath_japa_mala_logs') || '[]');
-        const streakData = JSON.parse(localStorage.getItem('innerpath_gratitude_streak') || '{}');
+        const fetchProfile = async () => {
+            if (!user) return;
 
-        setProfile(p => ({
-            ...p,
-            journalEntries: journals.length,
-            // Mocking 10 mins per mala session
-            meditationMinutes: malaLogs.length * 10,
-            streak: streakData.current_streak || 0,
-            level: malaLogs.length > 5 || journals.length > 5 ? 'Guardián de la Paz' : 'Iniciado',
-        }));
-    }, []);
+            // Fetch core profile stats
+            const { data: profileData } = await supabase
+                .from('profiles')
+                .select('total_meditation_minutes, current_streak')
+                .eq('id', user.id)
+                .single();
+
+            // Fetch journal entries count
+            const { count: journalCount } = await supabase
+                .from('journal_entries')
+                .select('*', { count: 'exact', head: true })
+                .eq('user_id', user.id);
+
+            setProfile(p => ({
+                ...p,
+                name: user.user_metadata?.full_name || p.name,
+                journalEntries: journalCount || 0,
+                meditationMinutes: profileData?.total_meditation_minutes || 0,
+                streak: profileData?.current_streak || 0,
+                level: (profileData?.total_meditation_minutes || 0) > 60 ? 'Guardián de la Paz' : 'Iniciado',
+            }));
+        };
+
+        fetchProfile();
+    }, [user]);
 
     return profile;
 }

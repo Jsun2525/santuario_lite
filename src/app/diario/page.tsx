@@ -73,7 +73,7 @@ export default function DiarioPage() {
                             </div>
                         ) : (
                             entries.map(entry => {
-                                const date = new Date(entry.date);
+                                const date = new Date(entry.created_at);
                                 const monthName = date.toLocaleString('es-ES', { month: 'short' });
                                 const dayName = date.getDate();
                                 return (

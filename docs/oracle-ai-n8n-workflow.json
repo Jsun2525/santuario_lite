@@ -1,0 +1,93 @@
+{
+    "name": "Oracle AI Webhook",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "oracle-insight",
+                "responseMode": "lastNode",
+                "responseData": "allEntries",
+                "options": {}
+            },
+            "id": "webhook-node-1",
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                0,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AQUI_TU_API_KEY",
+                "method": "POST",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "contents",
+                            "value": "={{ [ { \"parts\": [ {\"text\": \"Eres el Oráculo del Santuario de Bienestar. Eres místico, compasivo y sabio. Recibirás las entradas recientes del diario de un usuario. Tu tarea es analizar estas reflexiones e identificar patrones emocionales subyacentes, ofreciendo una breve y profunda revelación espiritual (máximo 3 párrafos cortos) sobre su estado de consciencia actual y cómo puede seguir elevándolo.\\n\\nEntradas del diario:\\n\" + $json.body.entries.map(e => e.date + \": \" + e.content).join(\"\\n\") } ] } ] }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "http-gemini",
+            "name": "Llamada a Gemini API",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                200,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "keepOnlySet": true,
+                "values": {
+                    "string": [
+                        {
+                            "name": "insight",
+                            "value": "={{ $json.candidates[0].content.parts[0].text }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "extract-insight",
+            "name": "Formatear Respuesta",
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 2,
+            "position": [
+                400,
+                0
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Llamada a Gemini API",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Llamada a Gemini API": {
+            "main": [
+                [
+                    {
+                        "node": "Formatear Respuesta",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {}
+}

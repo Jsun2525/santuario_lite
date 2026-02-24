@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inner Path | Racha de Gratitud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7d30f8",
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#0a070e",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass {
+            background: rgba(125, 48, 248, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .mystic-glow {
+            background: radial-gradient(circle at 50% -20%, rgba(125, 48, 248, 0.15) 0%, rgba(10, 7, 14, 0) 60%);
+        }
+        .mystic-orb {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(125, 48, 248, 0.1) 0%, rgba(125, 48, 248, 0) 70%);
+            filter: blur(40px);
+            z-index: -1;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        .nav-active {
+            color: #7d30f8;
+        }
+        .nav-active span {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col overflow-x-hidden relative">
+<div class="mystic-orb top-[-50px] left-[-100px]"></div>
+<div class="mystic-orb bottom-[100px] right-[-100px] opacity-60"></div>
+<div class="fixed inset-0 mystic-glow pointer-events-none"></div>
+<header class="flex items-center justify-between p-6 pt-12">
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-slate-100">arrow_back_ios_new</span>
+</button>
+<div class="flex flex-col items-center text-center">
+<span class="text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-1">Santuario de Bienestar</span>
+<h1 class="text-xl font-extrabold tracking-tight text-slate-100">Racha de Gratitud</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass">
+<span class="material-symbols-outlined text-slate-100">settings</span>
+</button>
+</header>
+<main class="flex-1 px-6 pb-32">
+<div class="grid grid-cols-2 gap-4 mt-4">
+<div class="glass p-6 rounded-xl flex flex-col items-center justify-center text-center space-y-1 border-primary/20">
+<span class="text-primary material-symbols-outlined text-3xl mb-1">local_fire_department</span>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Racha Actual</p>
+<p class="text-3xl font-extrabold text-white">7 <span class="text-sm font-light text-slate-400">días</span></p>
+</div>
+<div class="glass p-6 rounded-xl flex flex-col items-center justify-center text-center space-y-1">
+<span class="text-primary/60 material-symbols-outlined text-3xl mb-1">auto_awesome</span>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Racha Máxima</p>
+<p class="text-3xl font-extrabold text-white">15 <span class="text-sm font-light text-slate-400">días</span></p>
+</div>
+</div>
+<div class="flex items-center justify-center space-x-2 mt-6 mb-8 px-4 py-2.5 rounded-full bg-primary/5 border border-primary/10">
+<span class="material-symbols-outlined text-primary text-sm">schedule</span>
+<p class="text-[12px] text-slate-300 font-medium italic">Periodo de gracia de 24h activo para tu paz mental.</p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between px-2">
+<h3 class="text-sm font-semibold text-slate-400 uppercase tracking-[0.1em]">Tu santuario hoy</h3>
+<span class="text-[11px] text-primary/80 font-medium">Auto-guardado activo</span>
+</div>
+<div class="relative group">
+<div class="absolute -inset-0.5 bg-primary/20 rounded-xl blur opacity-30 group-focus-within:opacity-100 transition duration-1000"></div>
+<textarea class="relative w-full min-h-[300px] glass rounded-xl p-6 text-slate-100 placeholder:text-slate-500 text-lg leading-relaxed focus:ring-1 focus:ring-primary/50 focus:border-primary/50 border-white/5 resize-none transition-all" placeholder="¿Por qué estás agradecido hoy? Deja que tu alma se exprese..."></textarea>
+<div class="absolute bottom-4 right-4 flex space-x-2">
+<button class="p-2 rounded-full glass text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">mic</span>
+</button>
+<button class="p-2 rounded-full glass text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">palette</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-5 rounded-full shadow-lg shadow-primary/25 transition-all transform active:scale-[0.98] flex items-center justify-center space-x-3">
+<span class="material-symbols-outlined">auto_fix_high</span>
+<span class="text-lg tracking-wide uppercase font-extrabold">Guardar Entendimiento</span>
+</button>
+<p class="text-center text-slate-500 text-[11px] mt-4 font-light uppercase tracking-widest">
+            Cada entrada es una semilla en tu jardín espiritual.
+        </p>
+</div>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 glass border-t border-white/10 px-4 pt-3 pb-8 flex justify-between items-center z-50">
+<a class="flex flex-col items-center gap-1 min-w-[64px]" href="#">
+<span class="material-symbols-outlined text-slate-500">home</span>
+<span class="text-[10px] text-slate-500 font-medium">Inicio</span>
+</a>
+<a class="flex flex-col items-center gap-1 min-w-[64px]" href="#">
+<span class="material-symbols-outlined text-slate-500">self_improvement</span>
+<span class="text-[10px] text-slate-500 font-medium">Práctica</span>
+</a>
+<a class="flex flex-col items-center gap-1 min-w-[64px] nav-active" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="text-[10px] font-bold">Revelaciones</span>
+</a>
+<a class="flex flex-col items-center gap-1 min-w-[64px]" href="#">
+<span class="material-symbols-outlined text-slate-500">book_2</span>
+<span class="text-[10px] text-slate-500 font-medium">Biblioteca</span>
+</a>
+<a class="flex flex-col items-center gap-1 min-w-[64px]" href="#">
+<span class="material-symbols-outlined text-slate-500">account_circle</span>
+<span class="text-[10px] text-slate-500 font-medium">Perfil</span>
+</a>
+</nav>
+<img alt="Nebula background" class="fixed inset-0 w-full h-full object-cover opacity-10 mix-blend-screen pointer-events-none" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_PnDSwn67PMp9nSdkiiHc_iiWAKYNqBCK-GLw-Ahs7qDAZKTqQigkxUVkbp2luJXp8ygwe1bp2iBIMmjivL0rwBXNSE0vYHbIcIkQ0l8Ng3iPHvfxZR0Hx3rBZKCYoKeFdd3RCl6YlMRG18m9sMrMVW_BUrQSJ9AybiXOgJT1DZnHvqrDCBmNltRrnF2TOe_0UAzbKW-Q6nf81cvsUfI9SJQ3SSYfN9oRPrOJXEsDLf5WvmRojvfn8sVaIv9SWZFaLFYfpuYg2wdX"/>
+
+</body></html>

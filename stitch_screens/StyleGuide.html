@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inner Path Style Guide</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;family=Manrope:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7d30f8",
+                        "deep-space": "#020510",
+                        "mystical-violet": "#7B2FF7",
+                        "divine-gold": "#D4AF37",
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#020510",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "serif-elegant": ["Cinzel", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .shimmer {
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.05) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            background-size: 200% 100%;
+        }
+        .sacred-line {
+            stroke: #D4AF37;
+            stroke-width: 0.5;
+            fill: none;
+            opacity: 0.6;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark">
+<!-- Header / Navigation -->
+<header class="sticky top-0 z-50 flex flex-col gap-2 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 border-b border-slate-200 dark:border-primary/20">
+<div class="flex items-center h-12 justify-between">
+<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-slate-900 dark:text-slate-100 p-0">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<div class="pb-2">
+<h1 class="text-slate-900 dark:text-slate-100 tracking-tight text-[28px] font-bold leading-tight font-display">Inner Path Style Guide</h1>
+<p class="text-primary font-medium text-sm uppercase tracking-widest">Santuario de Bienestar</p>
+</div>
+</header>
+<main class="flex-1 pb-24">
+<!-- Palette Section -->
+<section class="px-4 pt-6">
+<h2 class="text-slate-900 dark:text-slate-100 text-[20px] font-bold leading-tight tracking-tight mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">palette</span>
+                    Primary Color Palette
+                </h2>
+<div class="grid grid-cols-1 gap-3">
+<!-- Deep Space -->
+<div class="glass-card flex items-center gap-4 rounded-xl p-4">
+<div class="size-14 rounded-full bg-[#020510] border border-white/10 shadow-lg shadow-black/50"></div>
+<div class="flex flex-col">
+<h3 class="text-slate-900 dark:text-slate-100 text-base font-bold">Deep Space</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-mono uppercase">#020510 — Background</p>
+</div>
+</div>
+<!-- Mystical Violet -->
+<div class="glass-card flex items-center gap-4 rounded-xl p-4">
+<div class="size-14 rounded-full bg-[#7B2FF7] border border-white/10 shadow-lg shadow-primary/20"></div>
+<div class="flex flex-col">
+<h3 class="text-slate-900 dark:text-slate-100 text-base font-bold">Mystical Violet</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-mono uppercase">#7B2FF7 — Primary Energy</p>
+</div>
+</div>
+<!-- Divine Gold -->
+<div class="glass-card flex items-center gap-4 rounded-xl p-4">
+<div class="size-14 rounded-full bg-[#D4AF37] border border-white/10 shadow-lg shadow-divine-gold/10"></div>
+<div class="flex flex-col">
+<h3 class="text-slate-900 dark:text-slate-100 text-base font-bold">Divine Gold</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-mono uppercase">#D4AF37 — Divine Accents</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Typography Section -->
+<section class="px-4 pt-8">
+<h2 class="text-slate-900 dark:text-slate-100 text-[20px] font-bold leading-tight tracking-tight mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">text_fields</span>
+                    Typography Hierarchy
+                </h2>
+<div class="glass-card rounded-xl p-6 flex flex-col gap-6">
+<div>
+<p class="text-primary text-[10px] uppercase tracking-[0.2em] mb-2 font-bold">Headers: Elegant Serif</p>
+<h3 class="font-serif-elegant text-4xl text-slate-900 dark:text-slate-100 leading-tight">La Presencia</h3>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-1 italic">Cinzel Regular / Bold</p>
+</div>
+<div class="pt-4 border-t border-white/5">
+<p class="text-primary text-[10px] uppercase tracking-[0.2em] mb-2 font-bold">Body: Clean Sans-serif</p>
+<p class="text-slate-900 dark:text-slate-200 text-base leading-relaxed">
+                            Nuestra alma encuentra refugio en el silencio. La paz interior es el camino hacia la iluminación suprema de nuestro ser espiritual.
+                        </p>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-2 italic">Manrope Regular / Medium / 16px</p>
+</div>
+</div>
+</section>
+<!-- Visual Effects Section -->
+<section class="px-4 pt-8">
+<h2 class="text-slate-900 dark:text-slate-100 text-[20px] font-bold leading-tight tracking-tight mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">blur_on</span>
+                    Efectos Visuales
+                </h2>
+<div class="grid grid-cols-2 gap-3">
+<div class="glass-card rounded-xl p-4 aspect-square flex flex-col justify-center items-center text-center overflow-hidden relative group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent"></div>
+<span class="material-symbols-outlined text-primary text-3xl mb-2">layers</span>
+<p class="text-xs font-bold uppercase tracking-wider mb-1">Glassmorphism</p>
+<p class="text-[10px] text-slate-500 dark:text-slate-400">Blur 20px, 1px white border at 10% opacity.</p>
+</div>
+<div class="glass-card rounded-xl p-4 aspect-square flex flex-col justify-center items-center text-center overflow-hidden relative">
+<div class="shimmer absolute inset-0"></div>
+<span class="material-symbols-outlined text-primary text-3xl mb-2">auto_awesome</span>
+<p class="text-xs font-bold uppercase tracking-wider mb-1">Shimmer Effect</p>
+<p class="text-[10px] text-slate-500 dark:text-slate-400">Subtle linear motion for loading states.</p>
+</div>
+</div>
+</section>
+<!-- Sacred Geometry Section -->
+<section class="px-4 pt-8">
+<h2 class="text-slate-900 dark:text-slate-100 text-[20px] font-bold leading-tight tracking-tight mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">language</span>
+                    Sacred Geometry
+                </h2>
+<div class="glass-card rounded-xl p-8 flex flex-col items-center justify-center min-h-[200px] relative overflow-hidden">
+<!-- Geometric Preview -->
+<svg class="w-48 h-48 drop-shadow-2xl" viewbox="0 0 100 100">
+<circle class="sacred-line" cx="50" cy="50" r="45"></circle>
+<circle class="sacred-line" cx="50" cy="50" r="30"></circle>
+<polygon class="sacred-line" points="50,5 95,75 5,75" transform="rotate(180 50 50)"></polygon>
+<polygon class="sacred-line" points="50,5 95,75 5,75"></polygon>
+<rect class="sacred-line" height="50" transform="rotate(45 50 50)" width="50" x="25" y="25"></rect>
+</svg>
+<p class="text-[10px] uppercase tracking-[0.3em] text-divine-gold mt-6 font-bold">Line Style: 0.5pt Weight</p>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex gap-2 border-t border-slate-200 dark:border-primary/20 bg-background-light dark:bg-[#11091d] px-4 pb-6 pt-2">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">menu_book</span>
+<p class="text-xs font-medium leading-normal tracking-wide">Guide</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">image</span>
+<p class="text-xs font-medium leading-normal tracking-wide">Assets</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">token</span>
+<p class="text-xs font-medium leading-normal tracking-wide">Tokens</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-xs font-medium leading-normal tracking-wide">Settings</p>
+</a>
+</nav>
+</div>
+</body></html>

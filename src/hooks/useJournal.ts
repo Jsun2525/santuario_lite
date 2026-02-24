@@ -1,42 +1,59 @@
 import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '@/lib/supabase/client';
+import { useAuth } from './useAuth';
 
 export interface JournalEntry {
     id: string;
-    date: string;
+    created_at: string;
     content: string;
     mood?: string;
+    insight_received?: string;
 }
 
 export function useJournal() {
+    const { user } = useAuth();
     const [entries, setEntries] = useState<JournalEntry[]>([]);
     const [isGeneratingInsight, setIsGeneratingInsight] = useState(false);
     const [insight, setInsight] = useState<string | null>(null);
 
-    useEffect(() => {
-        const stored = localStorage.getItem('innerpath_journal');
-        if (stored) {
-            setEntries(JSON.parse(stored));
-        }
-    }, []);
+    const fetchEntries = useCallback(async () => {
+        if (!user) return;
+        const { data } = await supabase
+            .from('journal_entries')
+            .select('*')
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false });
 
-    const saveEntry = useCallback((content: string, mood?: string) => {
-        const newEntry: JournalEntry = {
-            id: crypto.randomUUID(),
-            date: new Date().toISOString(),
+        if (data) setEntries(data as JournalEntry[]);
+    }, [user]);
+
+    useEffect(() => {
+        fetchEntries();
+    }, [fetchEntries]);
+
+    const saveEntry = useCallback(async (content: string, mood?: string) => {
+        if (!user) return;
+        const newEntry = {
+            user_id: user.id,
             content,
             mood,
         };
-        const updated = [newEntry, ...entries];
-        setEntries(updated);
-        localStorage.setItem('innerpath_journal', JSON.stringify(updated));
-    }, [entries]);
+
+        const { data, error } = await supabase
+            .from('journal_entries')
+            .insert(newEntry)
+            .select()
+            .single();
+
+        if (data && !error) {
+            setEntries(prev => [data as JournalEntry, ...prev]);
+        }
+    }, [user]);
 
     const generateAIInsight = useCallback(async () => {
         setIsGeneratingInsight(true);
         setInsight(null);
         try {
-            // Mocked N8N webhook call
-            // Replace with your actual n8n webhook URL
             const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || 'https://example.com/webhook/ai-oracle';
             const response = await fetch(webhookUrl, {
                 method: 'POST',
@@ -44,12 +61,18 @@ export function useJournal() {
                 body: JSON.stringify({ entries }),
             });
 
-            // For MVP without real webhook, we mock response after delay if it fails
             if (!response.ok) throw new Error('Webhook failed');
             const data = await response.json();
-            setInsight(data.insight || 'Las estrellas nos guían hacia la serenidad. Tu camino es claro.');
+
+            const newInsight = data.insight || 'Las estrellas nos guían hacia la serenidad. Tu camino es claro.';
+            setInsight(newInsight);
+
+            // Optional: Save the insight back to the most recent entry if needed.
+            if (entries.length > 0) {
+                await supabase.from('journal_entries').update({ insight_received: newInsight }).eq('id', entries[0].id);
+            }
+
         } catch (error) {
-            // Fallback response for MVP
             await new Promise(r => setTimeout(r, 2000));
             setInsight('El universo conspira a tu favor. He analizado tus entradas y veo un patrón de crecimiento espiritual y calma interior que se expande cada día.');
         } finally {

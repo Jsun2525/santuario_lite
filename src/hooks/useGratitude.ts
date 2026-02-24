@@ -1,87 +1,147 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { supabase } from "@/lib/supabase/client";
+import { useAuth } from "./useAuth";
 
 interface GratitudeData {
     currentStreak: number;
     maxStreak: number;
     lastDate: string | null;
-    notes: { id: string; text: string; date: string }[];
 }
 
-export function useGratitude(userId: string) {
+export function useGratitude() {
+    const { user } = useAuth();
     const [data, setData] = useState<GratitudeData>({
         currentStreak: 0,
         maxStreak: 0,
         lastDate: null,
-        notes: []
     });
     const [loading, setLoading] = useState(true);
 
-    // Load from local storage on mount
-    useEffect(() => {
-        if (!userId) return;
+    const fetchChallenge = useCallback(async () => {
+        if (!user) return;
 
-        const stored = localStorage.getItem(`gratitude_data_${userId}`);
-        if (stored) {
-            const parsed = JSON.parse(stored);
-            // Validate streak logic on load (freeze vs reset)
+        // MVP: Using current_day as currentStreak for the Gratitude Challenge
+        const { data: challengeData, error } = await supabase
+            .from('user_mantra_challenges')
+            .select('current_day, last_logged_date')
+            .eq('user_id', user.id)
+            .eq('status', 'active')
+            .single();
+
+        // Also fetch profile max streak to display
+        const { data: profileData } = await supabase
+            .from('profiles')
+            .select('max_streak')
+            .eq('id', user.id)
+            .single();
+
+        if (challengeData) {
+            // Validate freeze logic
             const now = new Date();
-            if (parsed.lastDate) {
-                const last = new Date(parsed.lastDate);
-                const diffHours = (now.getTime() - last.getTime()) / (1000 * 60 * 60);
+            const last = challengeData.last_logged_date ? new Date(challengeData.last_logged_date) : null;
+            let currentStrk = challengeData.current_day || 0;
+            let resetNeeded = false;
 
-                // If more than 48 hours passed, streak resets to 0. 
-                // 24h to 48h is the freeze grace period.
+            if (last) {
+                const diffHours = (now.getTime() - last.getTime()) / (1000 * 60 * 60);
                 if (diffHours > 48) {
-                    parsed.currentStreak = 0;
-                    parsed.lastDate = null; // Forces them to start day 1 again
-                    localStorage.setItem(`gratitude_data_${userId}`, JSON.stringify(parsed));
+                    currentStrk = 0;
+                    resetNeeded = true;
                 }
             }
-            setData(parsed);
+
+            if (resetNeeded) {
+                await supabase
+                    .from('user_mantra_challenges')
+                    .update({ current_day: 0, last_logged_date: null })
+                    .eq('user_id', user.id)
+                    .eq('status', 'active');
+            }
+
+            setData({
+                currentStreak: currentStrk,
+                lastDate: challengeData.last_logged_date,
+                maxStreak: profileData?.max_streak || 0
+            });
         }
+
         setLoading(false);
-    }, [userId]);
+    }, [user]);
+
+    useEffect(() => {
+        fetchChallenge();
+    }, [fetchChallenge]);
 
     const saveNote = async (text: string) => {
-        // Simulate network delay
-        await new Promise(r => setTimeout(r, 600));
+        if (!user) return { success: false };
 
         const now = new Date();
-        const newData = { ...data };
+        const isSameDay = data.lastDate && new Date(data.lastDate).toDateString() === now.toDateString();
 
-        // Check if they already saved today (prevent double increment)
-        const isSameDay = newData.lastDate && new Date(newData.lastDate).toDateString() === now.toDateString();
+        let newStreak = data.currentStreak;
 
         if (!isSameDay) {
-            newData.currentStreak += 1;
-            newData.maxStreak = Math.max(newData.maxStreak, newData.currentStreak);
-            newData.lastDate = now.toISOString();
+            newStreak += 1;
+            const newMaxStreak = Math.max(data.maxStreak, newStreak);
+
+            // 1. Update Profile max streak if needed
+            if (newMaxStreak > data.maxStreak) {
+                await supabase.from('profiles').update({ max_streak: newMaxStreak, current_streak: newStreak }).eq('id', user.id);
+            } else {
+                await supabase.from('profiles').update({ current_streak: newStreak }).eq('id', user.id);
+            }
+
+            // 2. Update Challenge tracking table
+            // In a real app we'd get the actual challenge ID, for MVP we do a general update or upsert
+            const { data: existingChallenge } = await supabase
+                .from('user_mantra_challenges')
+                .select('id')
+                .eq('user_id', user.id)
+                .eq('status', 'active')
+                .single();
+
+            if (existingChallenge) {
+                await supabase
+                    .from('user_mantra_challenges')
+                    .update({ current_day: newStreak, last_logged_date: now.toISOString() })
+                    .eq('id', existingChallenge.id);
+            } else {
+                await supabase
+                    .from('user_mantra_challenges')
+                    .insert({ user_id: user.id, current_day: newStreak, last_logged_date: now.toISOString(), status: 'active' });
+            }
+
+            setData({ currentStreak: newStreak, maxStreak: newMaxStreak, lastDate: now.toISOString() });
         }
 
-        newData.notes.push({
-            id: "note-" + Date.now(),
-            text,
-            date: now.toISOString()
+        // 3. Save gratitude note as a journal entry
+        await supabase.from('journal_entries').insert({
+            user_id: user.id,
+            content: text,
+            mood: 'gratitud'
         });
 
-        localStorage.setItem(`gratitude_data_${userId}`, JSON.stringify(newData));
-        setData(newData);
+        // Webhook logic
+        if (newStreak === 21) {
+            // 21 days challenge completed
+            await supabase
+                .from('user_mantra_challenges')
+                .update({ status: 'completed' })
+                .eq('user_id', user.id)
+                .eq('status', 'active');
 
-        // Webhook logic (mocked or actual fetch can stay here)
-        if (newData.currentStreak === 28) {
-            console.log("¡Racha de 28 días completada! (Webhook local trigger)");
             fetch("/api/webhooks/skool", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    email: userId + "@innerpath.app", // Mock
-                    challenge_id: "gratitud_28",
-                    completion_date: new Date().toISOString(),
-                    user_name: "Usuario MVP"
+                    email: user.email,
+                    challenge_id: "gratitud_21",
+                    completion_date: now.toISOString(),
+                    user_name: user.user_metadata?.full_name
                 })
-            }).catch(e => console.warn("Webhook failed in local MVP mode", e));
+            }).catch(e => console.warn("Webhook failed", e));
         }
 
         return { success: true };

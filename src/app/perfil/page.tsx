@@ -34,7 +34,7 @@ export default function PerfilPage() {
                     </div>
 
                     <div className="mt-8 text-center">
-                        <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{user?.name || "Buscador de Luz"}</h2>
+                        <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{user?.user_metadata?.full_name || "Buscador de Luz"}</h2>
                         <p className="text-primary font-medium mt-1">Senda de la Iluminación</p>
                         <div className="mt-4 flex gap-2 justify-center">
                             <div className="bg-white/5 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-xs text-slate-400">Nivel de Consciencia: {Math.floor(profile.meditationMinutes / 60) + 1}</div>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Inner Path | Japa Mala Unified Nav</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7B2FF7",
+                        "zen-blue": "#3B82F6",
+                        "bowl-gold": "#D4AF37",
+                        "stellar-violet": "#7B2FF7",
+                        "white-glow": "#FFFFFF",
+                        "background-dark": "#0a0712",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        :root {
+            --active-color: #3B82F6;
+            --glow-opacity: 0.4;
+        }
+        @keyframes pulse-gentle {
+            0%, 100% { transform: scale(1); opacity: 0.3; filter: blur(40px); }
+            50% { transform: scale(1.3); opacity: 0.6; filter: blur(70px); }
+        }
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes geometry-glow {
+            0%, 100% { filter: drop-shadow(0 0 12px var(--active-color)) opacity(0.7); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 28px var(--active-color)) opacity(1); transform: scale(1.03); }
+        }
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+        .orb-pulse {
+            animation: pulse-gentle 12s ease-in-out infinite;
+        }
+        .geometry-animation {
+            animation: geometry-glow 5s ease-in-out infinite, rotate-slow 80s linear infinite;
+        }
+        .particle {
+            position: absolute;
+            bottom: -20px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .nav-glass {
+            background: rgba(10, 7, 18, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .audio-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .active-sound-glow {
+            border-color: var(--active-color) !important;
+            box-shadow: 0 0 15px -2px var(--active-color);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        body {
+            min-height: 100dvh;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display text-slate-100 overflow-hidden antialiased">
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+<div class="absolute inset-0 bg-gradient-to-b from-background-dark via-[#0f0a1d] to-background-dark"></div>
+<div class="absolute inset-0 opacity-20">
+<div class="particle w-1 h-1 left-[15%]" style="animation: float-up 12s infinite 1s;"></div>
+<div class="particle w-0.5 h-0.5 left-[35%]" style="animation: float-up 15s infinite 4s;"></div>
+<div class="particle w-1.5 h-1.5 left-[55%]" style="animation: float-up 10s infinite 0s;"></div>
+<div class="particle w-1 h-1 left-[75%]" style="animation: float-up 18s infinite 7s;"></div>
+<div class="particle w-0.5 h-0.5 left-[95%]" style="animation: float-up 14s infinite 2s;"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="orb-pulse relative w-[100vw] h-[100vw] rounded-full mix-blend-screen opacity-40 blur-[100px]" style="background-color: var(--active-color);"></div>
+</div>
+</div>
+<main class="relative z-10 flex flex-col h-screen w-full px-6 pt-safe">
+<header class="flex items-center justify-between pt-8 h-16 shrink-0">
+<button class="flex items-center justify-center size-10 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-slate-100 hover:bg-white/10 transition-all active:scale-90">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+<div class="flex items-center gap-3 p-1.5 rounded-full bg-white/5 backdrop-blur-xl border border-white/10">
+<div class="size-6 rounded-full bg-zen-blue/60" title="Lluvia Zen"></div>
+<div class="size-6 rounded-full bg-bowl-gold/60" title="Cuencos Tibetanos"></div>
+<div class="size-6 rounded-full bg-stellar-violet/60" title="Viento Estelar"></div>
+</div>
+</header>
+<div class="flex-1 flex flex-col items-center justify-center relative">
+<div class="geometry-animation relative size-64 md:size-80 flex items-center justify-center" style="color: var(--active-color);">
+<svg class="w-full h-full fill-none stroke-current stroke-[0.8]" viewBox="0 0 200 200">
+<circle cx="100" cy="100" r="30"></circle>
+<circle cx="100" cy="70" r="30"></circle>
+<circle cx="100" cy="130" r="30"></circle>
+<circle cx="74" cy="85" r="30"></circle>
+<circle cx="126" cy="85" r="30"></circle>
+<circle cx="74" cy="115" r="30"></circle>
+<circle cx="126" cy="115" r="30"></circle>
+<circle class="opacity-20" cx="100" cy="100" r="90" stroke-dasharray="4 4"></circle>
+<circle class="opacity-60" cx="100" cy="100" r="98"></circle>
+</svg>
+</div>
+<div class="mt-14 text-center">
+<p class="text-white/30 text-[10px] font-bold tracking-[0.6em] uppercase">Meditación Activa</p>
+<p class="text-white text-xl font-light tracking-[0.2em] mt-3">Om Mani Padme Hum</p>
+</div>
+</div>
+<div class="mb-32 shrink-0">
+<div class="audio-glass rounded-3xl p-5 w-full max-w-sm mx-auto shadow-2xl">
+<div class="flex items-center justify-between mb-5 px-1">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-white/40 uppercase tracking-widest">Atmósfera</span>
+<span class="text-xs text-white/80 font-medium">Lluvia Zen</span>
+</div>
+<button class="size-10 flex items-center justify-center rounded-full text-white active:scale-90 transition-transform" style="background-color: var(--active-color); opacity: 0.85;">
+<span class="material-symbols-outlined text-xl">pause</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<button class="active-sound-glow flex items-center gap-3 p-3.5 rounded-2xl border border-white/5 text-white transition-all" style="--active-color: #3B82F6">
+<span class="material-symbols-outlined text-lg" style="color: #3B82F6">water_drop</span>
+<span class="text-[11px] font-semibold tracking-tight">Lluvia Zen</span>
+</button>
+<button class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/5 text-white/60 hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined text-lg">graphic_eq</span>
+<span class="text-[11px] font-semibold tracking-tight">Cuencos</span>
+</button>
+<button class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/5 text-white/60 hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined text-lg">air</span>
+<span class="text-[11px] font-semibold tracking-tight">Viento Estelar</span>
+</button>
+<button class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/5 text-white/60 hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined text-lg">blur_on</span>
+<span class="text-[11px] font-semibold tracking-tight">Ruido Blanco</span>
+</button>
+</div>
+<div class="mt-6 px-1 flex items-center gap-4">
+<span class="material-symbols-outlined text-sm text-white/30">volume_down</span>
+<div class="flex-1 h-1 bg-white/10 rounded-full relative">
+<div class="absolute left-0 top-0 h-full w-2/3 rounded-full" style="background-color: var(--active-color);"></div>
+<div class="absolute left-[66%] top-1/2 -translate-y-1/2 size-3 bg-white rounded-full shadow-lg border-2 border-slate-900"></div>
+</div>
+<span class="material-symbols-outlined text-sm text-white/30">volume_up</span>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed bottom-0 left-0 w-full h-44 bg-gradient-to-t from-background-dark/95 via-background-dark/60 to-transparent pointer-events-none z-20"></div>
+<nav class="fixed bottom-0 left-0 right-0 z-30 nav-glass px-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-4">
+<div class="max-w-md mx-auto flex justify-between items-center">
+<a class="flex flex-col items-center gap-1.5 group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">home</span>
+<span class="text-[9px] font-bold text-slate-500 group-hover:text-white uppercase tracking-tighter">Inicio</span>
+</a>
+<a class="flex flex-col items-center gap-1.5 group" href="#">
+<span class="material-symbols-outlined text-white fill-1" style="color: var(--active-color);">self_improvement</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter" style="color: var(--active-color);">Práctica</span>
+</a>
+<a class="flex flex-col items-center gap-1.5 group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">auto_awesome</span>
+<span class="text-[9px] font-bold text-slate-500 group-hover:text-white uppercase tracking-tighter">Revelaciones</span>
+</a>
+<a class="flex flex-col items-center gap-1.5 group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">library_books</span>
+<span class="text-[9px] font-bold text-slate-500 group-hover:text-white uppercase tracking-tighter">Biblioteca</span>
+</a>
+<a class="flex flex-col items-center gap-1.5 group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white transition-colors">account_circle</span>
+<span class="text-[9px] font-bold text-slate-500 group-hover:text-white uppercase tracking-tighter">Perfil</span>
+</a>
+</div>
+</nav>
+
+</body></html>

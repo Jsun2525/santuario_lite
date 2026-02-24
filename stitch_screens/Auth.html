@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;500;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7d30f8",
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#0a070e",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .mystic-gradient {
+            background: radial-gradient(circle at top right, rgba(125, 48, 248, 0.15), transparent),
+                        radial-gradient(circle at bottom left, rgba(125, 48, 248, 0.1), transparent);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col overflow-hidden">
+<!-- Background Decorative Elements -->
+<div class="fixed inset-0 z-0 mystic-gradient pointer-events-none"></div>
+<div class="fixed top-[-10%] right-[-10%] w-[300px] h-[300px] bg-primary/20 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="fixed bottom-[-5%] left-[-5%] w-[250px] h-[250px] bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
+<div class="relative z-10 flex flex-col min-h-screen w-full">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between p-6">
+<button class="flex items-center gap-1 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+<span class="text-sm font-medium tracking-wide">Volver</span>
+</button>
+<div class="w-8"></div> <!-- Spacer for symmetry -->
+</header>
+<!-- Main Content Container -->
+<main class="flex-1 flex flex-col items-center justify-center px-6 pb-12">
+<!-- Branding -->
+<div class="text-center mb-10">
+<h1 class="font-serif text-5xl md:text-6xl italic font-light tracking-tight text-white mb-2">Inner Path</h1>
+<p class="text-primary font-light tracking-[0.3em] text-xs uppercase">Santuario de Bienestar</p>
+</div>
+<!-- Auth Glass Card -->
+<div class="glass-card w-full max-w-[400px] p-8 rounded-xl shadow-2xl">
+<form class="space-y-6">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="text-[10px] uppercase tracking-[0.2em] text-slate-400 ml-4">Email</label>
+<div class="relative">
+<input class="w-full bg-white/5 border border-white/10 rounded-full h-14 px-6 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-base" placeholder="tu@email.com" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<label class="text-[10px] uppercase tracking-[0.2em] text-slate-400 ml-4">Contraseña</label>
+<div class="relative flex items-center">
+<input class="w-full bg-white/5 border border-white/10 rounded-full h-14 px-6 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-base pr-12" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 text-slate-500 hover:text-white transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<!-- Forgot Password -->
+<div class="flex justify-end px-2">
+<button class="text-xs text-slate-400 hover:text-primary transition-colors" type="button">
+                            ¿Olvidaste tu contraseña?
+                        </button>
+</div>
+<!-- Main Action Button -->
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold h-14 rounded-full shadow-[0_0_20px_rgba(125,48,248,0.3)] tracking-[0.1em] text-sm uppercase transition-all active:scale-[0.98]">
+                        Entrar
+                    </button>
+</form>
+<!-- Footer Toggle -->
+<div class="mt-8 text-center">
+<p class="text-slate-400 text-sm">
+                        ¿Nuevo en el santuario? 
+                        <button class="text-primary font-bold ml-1 hover:underline underline-offset-4">Crear cuenta</button>
+</p>
+</div>
+</div>
+<!-- Social Auth (Optional but fits the aesthetic) -->
+<div class="mt-8 flex flex-col items-center gap-4">
+<span class="text-[10px] text-slate-500 uppercase tracking-widest">O conecta con</span>
+<div class="flex gap-4">
+<button class="size-12 rounded-full glass-card flex items-center justify-center hover:bg-white/10 transition-colors">
+<img alt="Apple Icon" class="w-5 h-5 invert" data-alt="Logotipo de Apple para inicio de sesión" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLm75w7HK01vpOZzspY19lzaZtFE9GPFPv0jZDyabZKmzsrDcBRuOuoF6bnPZghlXWE5SAGCqGjtTnFIjiknbkN_Za-FTr0vjvYuNZVVuW3MTZ0une6vAvBGnzRRAM1fIhY-YpmkIdVId4ItsCe6XvUgkBmVwkJ3NOekjhoylPprXO40TJaZQF_yqn0DwjpXW0_sxBKebK9kKNO4VCsyey1wMRck-Ty7iRgm5zwAiIk4KUGCAn2g0F1I0jy4zAEAXFopg6JF8ciz2S"/>
+</button>
+<button class="size-12 rounded-full glass-card flex items-center justify-center hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-white">mail</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Bottom Safe Area -->
+<footer class="h-8"></footer>
+</div>
+</body></html>

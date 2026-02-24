@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7d30f8",
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#170f23",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .purple-glow {
+            box-shadow: 0 0 30px 5px rgba(125, 48, 248, 0.4);
+        }
+        .bg-aura {
+            background: radial-gradient(circle at 50% 50%, rgba(125, 48, 248, 0.15) 0%, rgba(23, 15, 35, 0) 70%);
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen pb-32 overflow-x-hidden">
+<header class="sticky top-0 z-50 px-6 pt-12 pb-4 glass border-b-0">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary/20 rounded-full">
+<span class="material-symbols-outlined text-primary text-2xl">auto_awesome</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">Inner Path</h1>
+</div>
+<button class="p-2 rounded-full hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-slate-400">notifications</span>
+</button>
+</div>
+</header>
+<main class="px-5 py-6 space-y-8 bg-aura">
+<section class="space-y-4">
+<button class="w-full flex items-center justify-center gap-3 bg-primary py-4 px-6 rounded-xl text-white font-bold text-lg shadow-lg purple-glow hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined">psychology</span>
+                Generar Insights con IA
+            </button>
+<div class="glass p-6 rounded-xl space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="text-primary font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">colors_spark</span>
+                        Tu Esencia Semanal
+                    </h2>
+<span class="text-[10px] uppercase tracking-widest text-slate-400 bg-white/5 px-2 py-1 rounded">24 Oct - 31 Oct</span>
+</div>
+<p class="text-slate-300 leading-relaxed text-sm">
+                    Tus reflexiones muestran un patrón de crecimiento profundo y gratitud hacia los pequeños momentos de calma. Has gestionado la ansiedad de forma consciente.
+                </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="flex items-center gap-1 glass px-3 py-1.5 rounded-full text-xs font-medium border-primary/30">
+<span class="material-symbols-outlined text-sm text-green-400">arrow_upward</span> Crecimiento
+                    </span>
+<span class="flex items-center gap-1 glass px-3 py-1.5 rounded-full text-xs font-medium border-primary/30">
+<span class="material-symbols-outlined text-sm text-yellow-400">favorite</span> Gratitud
+                    </span>
+<span class="flex items-center gap-1 glass px-3 py-1.5 rounded-full text-xs font-medium border-primary/30">
+<span class="material-symbols-outlined text-sm text-blue-400">water_drop</span> Calma
+                    </span>
+</div>
+<div class="pt-4 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-500 italic">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span> Encriptado y Seguro
+                    </span>
+<span>Análisis basado en 12 notas</span>
+</div>
+</div>
+</section>
+<section class="space-y-4">
+<div class="flex items-center justify-between px-1">
+<h3 class="text-lg font-bold">Tus Reflexiones</h3>
+<button class="text-primary text-sm font-semibold">Ver todo</button>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm transition-all" placeholder="Buscar en tu alma..." type="text"/>
+</div>
+<div class="space-y-3">
+<div class="glass p-5 rounded-xl flex gap-4 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="flex flex-col items-center justify-center min-w-[50px] bg-white/5 rounded-lg py-2">
+<span class="text-xs font-bold uppercase text-slate-400">OCT</span>
+<span class="text-xl font-black text-white">24</span>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<h4 class="font-bold group-hover:text-primary transition-colors">Meditación bajo la luna</h4>
+<span class="material-symbols-outlined text-primary text-sm fill-1">dark_mode</span>
+</div>
+<p class="text-slate-400 text-xs line-clamp-2 leading-relaxed">
+                            Hoy sentí una conexión especial con el silencio. La respiración fluyó sin esfuerzo y pude soltar las tensiones del trabajo...
+                        </p>
+</div>
+</div>
+<div class="glass p-5 rounded-xl flex gap-4 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="flex flex-col items-center justify-center min-w-[50px] bg-white/5 rounded-lg py-2">
+<span class="text-xs font-bold uppercase text-slate-400">OCT</span>
+<span class="text-xl font-black text-white">22</span>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<h4 class="font-bold group-hover:text-primary transition-colors">Reflexión sobre el perdón</h4>
+<span class="material-symbols-outlined text-yellow-500 text-sm fill-1">wb_sunny</span>
+</div>
+<p class="text-slate-400 text-xs line-clamp-2 leading-relaxed">
+                            Perdonar no es olvidar, es liberar la carga que uno lleva. He decidido soltar esa vieja historia que ya no me pertenece...
+                        </p>
+</div>
+</div>
+<div class="glass p-5 rounded-xl flex gap-4 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="flex flex-col items-center justify-center min-w-[50px] bg-white/5 rounded-lg py-2">
+<span class="text-xs font-bold uppercase text-slate-400">OCT</span>
+<span class="text-xl font-black text-white">20</span>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between">
+<h4 class="font-bold group-hover:text-primary transition-colors">Caminata consciente</h4>
+<span class="material-symbols-outlined text-green-500 text-sm fill-1">nature_people</span>
+</div>
+<p class="text-slate-400 text-xs line-clamp-2 leading-relaxed">
+                            Sentir la tierra bajo mis pies me recordó que soy parte de algo mucho más grande. La naturaleza siempre tiene respuestas...
+                        </p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<button class="fixed bottom-28 right-6 w-14 h-14 bg-primary rounded-full flex items-center justify-center text-white shadow-xl shadow-primary/40 active:scale-90 transition-transform z-40">
+<span class="material-symbols-outlined text-3xl font-bold">add</span>
+</button>
+<nav class="fixed bottom-0 inset-x-0 glass border-t border-white/10 pt-3 pb-8 px-4 z-50">
+<div class="flex items-center justify-around max-w-md mx-auto">
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[26px]">home</span>
+<span class="text-[10px] font-medium">Inicio</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[26px]">self_improvement</span>
+<span class="text-[10px] font-medium">Práctica</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined text-[26px] fill-1">auto_stories</span>
+<span class="text-[10px] font-medium font-bold">Revelaciones</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[26px]">local_library</span>
+<span class="text-[10px] font-medium">Biblioteca</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[26px]">person</span>
+<span class="text-[10px] font-medium">Perfil</span>
+</a>
+</div>
+<div class="h-1.5 w-32 bg-white/20 mx-auto rounded-full mt-4"></div>
+</nav>
+<div class="fixed top-[-10%] left-[-10%] w-72 h-72 bg-primary/20 blur-[120px] rounded-full pointer-events-none z-0"></div>
+<div class="fixed bottom-[-10%] right-[-10%] w-96 h-96 bg-primary/10 blur-[150px] rounded-full pointer-events-none z-0"></div>
+
+</body></html>

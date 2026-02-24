@@ -88,13 +88,13 @@ export default function BibliotecaPage() {
                         <h2 className="text-lg font-bold">Silencio Interior</h2>
                     </div>
                     <div className="space-y-4">
-                        <Link href="/sonidos" className="flex items-center p-3 glass rounded-xl border-white/5 hover:bg-white/5 transition-colors">
+                        <Link href="/meditacion-libre" className="flex items-center p-3 glass rounded-xl border-white/5 hover:bg-white/5 transition-colors">
                             <div className="size-14 rounded-lg overflow-hidden shrink-0">
                                 <img className="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA94bWIIRUnDpsY31afssg52wa9EmwOIP2Mcy0-dYm1LkTJdMPs66Uft01d7L4Qq8EQNwzzQk-9gq81VVWdKD9ZpnUh7tqSZ3wQFlvSx3wef2oW0LLGy6rgOl2NFBpSu67bD9K_RMzAdSFSPX6EdOpN7jtUNPUJ1gGYxcnmqjUdpLGdW_XyATZgKH7FioFTTi77bxJrjN38hS7MBfW_MnJZqVyPUZa6ijoOJ3wsoZYU3go4iG2wQWnulXQUqk8-ZjeP0BAhBq1Wd_Fq" alt="Vacío" />
                             </div>
                             <div className="ml-4 flex-1">
                                 <h4 className="text-sm font-bold">Vacío Absoluto</h4>
-                                <p className="text-xs text-slate-400">Zen • 30 min</p>
+                                <p className="text-xs text-slate-400">Zen • Timer</p>
                             </div>
                             <span className="material-symbols-outlined text-slate-500">more_vert</span>
                         </Link>

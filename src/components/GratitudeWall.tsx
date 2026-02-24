@@ -5,7 +5,7 @@ import { useGratitude } from "@/hooks/useGratitude";
 
 export default function GratitudeWall() {
     const { user, loading: userLoading } = useAuth();
-    const { currentStreak, maxStreak, saveNote, loading: streakLoading } = useGratitude(user?.id || "");
+    const { currentStreak, maxStreak, saveNote, loading: streakLoading } = useGratitude();
     const [note, setNote] = useState("");
     const [isSaving, setIsSaving] = useState(false);
     const [synced, setSynced] = useState(false);
