@@ -31,6 +31,23 @@ export default function Dashboard() {
             <cite className="text-[9px] uppercase tracking-widest text-slate-500 not-italic">— Buda</cite>
           </section>
 
+          {/* Tu Camino - Duolingo Style Path */}
+          <Link href="/tu-camino" className="glass-card shimmer-effect iridescent-border rounded-2xl overflow-hidden group h-32 block cursor-pointer">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/10"></div>
+            <div className="absolute inset-0 flex items-center p-6 gap-6">
+              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30 shadow-[0_0_20px_rgba(123,47,247,0.3)]">
+                <span className="material-symbols-outlined text-white text-3xl">route</span>
+              </div>
+              <div>
+                <h2 className="font-serif text-xl text-white">Tu Camino</h2>
+                <p className="text-slate-400 text-[10px] uppercase tracking-widest font-bold">Progreso y Desbloqueos</p>
+              </div>
+              <div className="ml-auto">
+                <span className="material-symbols-outlined text-primary">chevron_right</span>
+              </div>
+            </div>
+          </Link>
+
           {/* Japa Mala */}
           <Link href="/japamala" className="glass-card shimmer-effect iridescent-border rounded-2xl overflow-hidden group h-48 block cursor-pointer">
             <img alt="Japa Mala" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjlm8tCQWnRn8P--lvkFYwDd2co4XzZ3Hm3EqhkZMxPp0SPQqd5ecgbit8jnyVjbEHDx_8-8NkRnNm4W4O0X9RIEEMB63rlcttfghEoBEh4eoE0G1e3sx4GBzeEG495nXpWYM8GZavsGAAjcYJIiAmdOkKU6nNyn6CRjcr-9r4HsOviLiD-zPh7xKL7PcfBheb-K0wSdDegU_z2V4A1yDqxq2sjMkRbHedlH9gfz36bAwxxQoRuEA0X6AYhyjqd2c2FBcAW92M_2YH" />

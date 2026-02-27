@@ -31,11 +31,11 @@ export function BottomNav() {
                     <span className="text-[9px] font-medium mt-1 uppercase tracking-tighter">Revelaciones</span>
                 </Link>
                 <Link
-                    href="/biblioteca"
-                    className={`flex flex-col items-center justify-center w-1/5 transition-colors ${pathname === '/biblioteca' ? 'text-primary' : 'text-slate-400'}`}
+                    href="/tu-camino"
+                    className={`flex flex-col items-center justify-center w-1/5 transition-colors ${pathname === '/tu-camino' ? 'text-primary' : 'text-slate-400'}`}
                 >
-                    <span className={`material-symbols-outlined !text-[28px] ${pathname === '/biblioteca' ? 'fill-[1]' : ''}`}>library_books</span>
-                    <span className="text-[9px] font-medium mt-1 uppercase tracking-tighter">Biblioteca</span>
+                    <span className={`material-symbols-outlined !text-[28px] ${pathname === '/tu-camino' ? 'fill-[1]' : ''}`}>route</span>
+                    <span className="text-[9px] font-medium mt-1 uppercase tracking-tighter">Tu Camino</span>
                 </Link>
                 <Link
                     href="/perfil"
