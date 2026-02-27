@@ -70,65 +70,51 @@ export function usePracticePath() {
 
     useEffect(() => {
         fetchPath();
-    }, [fetchPath]);
+
+        // 5. Subscribe to Realtime changes for this user's progress
+        if (!user) return;
+
+        const channel = supabase
+            .channel(`user_progress_${user.id}`)
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'user_path_progress',
+                    filter: `user_id=eq.${user.id}`
+                },
+                () => {
+                    // Update local state when progress changes in DB (triggered by n8n/Skool webhook)
+                    fetchPath();
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
+    }, [user, fetchPath]);
 
     const completeStep = async (stepId: string) => {
+        // This function is now mostly used to trigger ACTIONable steps from the APP
+        // For 'practice' steps, it can still be used to mark local completion if desired
+        // but the main 'class' completion comes from Skool now.
         if (!user) return { success: false };
 
-        const currentStepIndex = steps.findIndex(s => s.id === stepId);
-        if (currentStepIndex === -1) return { success: false };
-
-        const currentStep = steps[currentStepIndex];
-        const nextStep = steps[currentStepIndex + 1];
-
-        const now = new Date();
-
-        // 1. Mark current as completed
-        const { error: updateError } = await supabase
+        // For non-Skool linked steps (e.g. manual practices in app)
+        const { error } = await supabase
             .from('user_path_progress')
             .upsert({
                 user_id: user.id,
                 step_id: stepId,
                 status: 'completed',
-                completed_at: now.toISOString(),
-                updated_at: now.toISOString()
+                completed_at: new Date().toISOString()
             }, { onConflict: 'user_id,step_id' });
 
-        if (updateError) {
-            console.error("Error updating current step:", updateError);
-            return { success: false };
-        }
+        if (error) return { success: false };
 
-        // 2. Mark NEXT as available if it exists
-        if (nextStep) {
-            await supabase
-                .from('user_path_progress')
-                .upsert({
-                    user_id: user.id,
-                    step_id: nextStep.id,
-                    status: 'available',
-                    updated_at: now.toISOString()
-                }, { onConflict: 'user_id,step_id' });
-        }
-
-        // 3. Trigger Skool Webhook if applicable
-        // Even if no skool_course_id is set in the DB yet, we send the event to n8n
-        fetch("/api/webhooks/skool", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                email: user.email,
-                event: "step_completed",
-                step_title: currentStep.title,
-                step_type: currentStep.type,
-                skool_course_id: currentStep.skool_course_id,
-                skool_module_id: currentStep.skool_module_id,
-                user_name: user.user_metadata?.full_name || user.email
-            })
-        }).catch(e => console.warn("Skool webhook failed", e));
-
-        // Refresh local state
-        await fetchPath();
+        fetchPath();
         return { success: true };
     };
 

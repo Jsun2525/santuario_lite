@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
+import SkoolVerification from "@/components/SkoolVerification";
 
 export default function AuthPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [loadingMsg, setLoadingMsg] = useState("");
+    const [isVerified, setIsVerified] = useState(false); // New state for Skool verification
     const router = useRouter();
     const { signIn } = useAuth();
 
@@ -27,13 +29,30 @@ export default function AuthPage() {
         const { error } = await signIn(email, password);
 
         if (error) {
-            // For MVP mock user, this shouldn't fail, but let's handle it
             setErrorMsg(error.message || "Error al iniciar sesión");
             setLoadingMsg("");
         } else {
             router.push("/");
         }
     };
+
+    if (!isVerified) {
+        return (
+            <div className="flex flex-col min-h-screen text-slate-100 relative overflow-hidden bg-background-dark font-display">
+                <div className="fixed inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(125,48,248,0.15),transparent)]"></div>
+                <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6">
+                    <div className="text-center mb-10">
+                        <h1 className="font-accent text-5xl italic font-light tracking-tight text-white mb-2">Inner Path</h1>
+                        <p className="text-primary font-light tracking-[0.3em] text-xs uppercase text-center">Santuario de Bienestar</p>
+                    </div>
+                    {/* Skool Verification Gate */}
+                    <div className="w-full max-w-[400px]">
+                        <SkoolVerification onVerify={() => setIsVerified(true)} />
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="flex flex-col min-h-screen text-slate-100 relative overflow-hidden bg-background-dark font-display">
