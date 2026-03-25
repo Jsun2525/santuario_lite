@@ -49,7 +49,7 @@ export function PracticePath({ steps, onStepClick }: PracticePathProps) {
 
                             {/* Level Indicator */}
                             <div className="absolute -bottom-2 bg-background border border-white/20 px-2 py-0.5 rounded-full text-[10px] font-bold">
-                                STEP {index + 1}
+                                PASO {index + 1}
                             </div>
                         </button>
 
@@ -59,7 +59,7 @@ export function PracticePath({ steps, onStepClick }: PracticePathProps) {
                                 {step.title}
                             </h3>
                             <p className="text-[10px] text-slate-400 uppercase tracking-widest">
-                                {step.type}
+                                {step.type === 'class' ? 'Lección' : step.type === 'practice' ? 'Práctica' : step.type}
                             </p>
                         </div>
                     </div>

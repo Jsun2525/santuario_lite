@@ -114,6 +114,10 @@ export default function PerfilPage() {
                 {/* Settings list */}
                 <section className="px-6 mt-8 mb-8">
                     <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden divide-y divide-white/5">
+                        <Link href="/estadisticas" className="flex items-center gap-4 px-5 py-4 hover:bg-white/5 transition-colors">
+                            <span className="material-symbols-outlined text-slate-300 text-xl">bar_chart</span>
+                            <span className="text-sm font-medium">Estadísticas</span>
+                        </Link>
                         <Link href="#" className="flex items-center gap-4 px-5 py-4 hover:bg-white/5 transition-colors">
                             <span className="material-symbols-outlined text-slate-300 text-xl">edit</span>
                             <span className="text-sm font-medium">Editar Perfil</span>

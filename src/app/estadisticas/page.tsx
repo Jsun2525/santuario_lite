@@ -17,7 +17,7 @@ export default function EstadisticasPage() {
         <Link href="/perfil" className="text-white/70 hover:text-white transition-colors">
           <span className="material-symbols-rounded text-2xl">arrow_back</span>
         </Link>
-        <h1 className="text-lg font-bold text-white">Tu Camino</h1>
+        <h1 className="text-lg font-bold text-white">Estadísticas</h1>
         <div className="w-9 h-9 rounded-full bg-[#2a2416] flex items-center justify-center">
           <span className="material-symbols-rounded text-[#f9bd24] text-xl">account_circle</span>
         </div>

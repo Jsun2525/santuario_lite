@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { BottomNav } from "@/components/BottomNav";
-import { useAudioPlayer, FREQUENCIES } from "@/hooks/useAudioPlayer";
+import { useAudioPlayer } from "@/hooks/useAudioPlayer";
 
 export default function SonidosPage() {
     const { isPlaying, togglePlay, volume, setVolume } = useAudioPlayer("/sounds/brainwaves.mp3");
