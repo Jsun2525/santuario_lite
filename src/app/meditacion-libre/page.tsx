@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MeditationTimer } from "@/components/MeditationTimer";
-import { AudioMixer } from "@/components/AudioMixer";
+import dynamic from 'next/dynamic';
+const AudioMixer = dynamic(() => import('@/components/AudioMixer').then(mod => mod.AudioMixer));
 
 export default function MeditacionLibrePage() {
     return (

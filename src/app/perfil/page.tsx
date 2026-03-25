@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { BottomNav } from "@/components/BottomNav";
 import { useAuth } from "@/hooks/useAuth";
@@ -26,7 +27,7 @@ export default function PerfilPage() {
                     <div className="relative">
                         <div className="absolute inset-0 shadow-[0_0_40px_10px_rgba(122,49,246,0.4)] rounded-full scale-110"></div>
                         <div className="relative z-10 size-32 rounded-full border-2 border-primary/50 p-1 overflow-hidden bg-background-dark">
-                            <img alt="Avatar" className="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3G7VayEH6Qb0o0GpQO2REIKC4LFhkMPgux5Z0CO5ef2Oic_3duP_GW9A_1S0KBza6nQljL1pa6LsvgIpyJZGZ8z_94Xo2R5edtm8DU8ihXEGzeLZiOBQTu3LjIyMiX6cesGkpVEJf_34T-uhCC107ls6zrbUU4ZmGMbXRf8hQDqfuISbayhvA-FMyEtBTT_u0mpdKlM-zENf3C526o2yqdcuQcr7JjGRJSBQRDYcO2awMuNRXo6O7umMKbDzVfw8sC6LEW2pObyHq" />
+                            <Image alt="Avatar" width={200} height={200} className="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3G7VayEH6Qb0o0GpQO2REIKC4LFhkMPgux5Z0CO5ef2Oic_3duP_GW9A_1S0KBza6nQljL1pa6LsvgIpyJZGZ8z_94Xo2R5edtm8DU8ihXEGzeLZiOBQTu3LjIyMiX6cesGkpVEJf_34T-uhCC107ls6zrbUU4ZmGMbXRf8hQDqfuISbayhvA-FMyEtBTT_u0mpdKlM-zENf3C526o2yqdcuQcr7JjGRJSBQRDYcO2awMuNRXo6O7umMKbDzVfw8sC6LEW2pObyHq" />
                         </div>
                         <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20 px-4 py-1 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">
                             Despierto

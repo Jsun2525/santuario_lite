@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { useJapaMala } from "@/hooks/useJapaMala";
-import { AudioMixer } from "./AudioMixer";
+import dynamic from 'next/dynamic';
+const AudioMixer = dynamic(() => import('./AudioMixer').then(mod => mod.AudioMixer), { ssr: false });
 
 export default function JapaMalaCounter() {
     const { user } = useAuth();

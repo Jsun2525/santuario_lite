@@ -70,6 +70,11 @@ export function useAudioMixer() {
     useEffect(() => {
         const updateAudioLayer = (ref: React.MutableRefObject<HTMLAudioElement | null>, src: string | null, vol: number) => {
             if (src) {
+                // Lazy initialization: ONLY create new Audio if isMasterPlaying is true OR if it already exists
+                if (!ref.current && !isMasterPlaying) {
+                    return;
+                }
+
                 if (!ref.current || ref.current.src !== src) {
                     // Need new Audio object or change src
                     if (ref.current) {
@@ -80,11 +85,14 @@ export function useAudioMixer() {
                         ref.current.loop = true;
                     }
                 }
-                ref.current.volume = vol;
-                if (isMasterPlaying) {
-                    ref.current.play().catch(console.error);
-                } else {
-                    ref.current.pause();
+
+                if (ref.current) {
+                    ref.current.volume = vol;
+                    if (isMasterPlaying) {
+                        ref.current.play().catch(console.error);
+                    } else {
+                        ref.current.pause();
+                    }
                 }
             } else {
                 if (ref.current) {

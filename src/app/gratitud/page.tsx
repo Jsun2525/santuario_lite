@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BottomNav } from "@/components/BottomNav";
@@ -30,7 +31,7 @@ export default function GratitudPage() {
             <div className="absolute top-[-50px] left-[-100px] w-[300px] h-[300px] bg-[radial-gradient(circle,rgba(125,48,248,0.1)_0%,rgba(125,48,248,0)_70%)] blur-[40px] -z-10"></div>
             <div className="absolute bottom-[100px] right-[-100px] w-[300px] h-[300px] bg-[radial-gradient(circle,rgba(125,48,248,0.1)_0%,rgba(125,48,248,0)_70%)] blur-[40px] opacity-60 -z-10"></div>
             <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(125,48,248,0.15)_0%,rgba(10,7,14,0)_60%)] pointer-events-none"></div>
-            <img alt="Nebula" className="fixed inset-0 w-full h-full object-cover opacity-10 mix-blend-screen pointer-events-none" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_PnDSwn67PMp9nSdkiiHc_iiWAKYNqBCK-GLw-Ahs7qDAZKTqQigkxUVkbp2luJXp8ygwe1bp2iBIMmjivL0rwBXNSE0vYHbIcIkQ0l8Ng3iPHvfxZR0Hx3rBZKCYoKeFdd3RCl6YlMRG18m9sMrMVW_BUrQSJ9AybiXOgJT1DZnHvqrDCBmNltRrnF2TOe_0UAzbKW-Q6nf81cvsUfI9SJQ3SSYfN9oRPrOJXEsDLf5WvmRojvfn8sVaIv9SWZFaLFYfpuYg2wdX" />
+            <Image alt="Nebula" width={1200} height={1200} className="fixed inset-0 w-full h-full object-cover opacity-10 mix-blend-screen pointer-events-none" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_PnDSwn67PMp9nSdkiiHc_iiWAKYNqBCK-GLw-Ahs7qDAZKTqQigkxUVkbp2luJXp8ygwe1bp2iBIMmjivL0rwBXNSE0vYHbIcIkQ0l8Ng3iPHvfxZR0Hx3rBZKCYoKeFdd3RCl6YlMRG18m9sMrMVW_BUrQSJ9AybiXOgJT1DZnHvqrDCBmNltRrnF2TOe_0UAzbKW-Q6nf81cvsUfI9SJQ3SSYfN9oRPrOJXEsDLf5WvmRojvfn8sVaIv9SWZFaLFYfpuYg2wdX" />
 
             <header className="flex items-center justify-between p-6 pt-12 relative z-10">
                 <Link href="/" className="size-10 flex items-center justify-center rounded-full bg-white/5 backdrop-blur-md border border-white/10 hover:bg-primary/20 transition-colors">

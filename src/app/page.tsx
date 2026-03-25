@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { BottomNav } from "@/components/BottomNav";
 
@@ -50,7 +51,7 @@ export default function Dashboard() {
 
           {/* Japa Mala */}
           <Link href="/japamala" className="glass-card shimmer-effect iridescent-border rounded-2xl overflow-hidden group h-48 block cursor-pointer">
-            <img alt="Japa Mala" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjlm8tCQWnRn8P--lvkFYwDd2co4XzZ3Hm3EqhkZMxPp0SPQqd5ecgbit8jnyVjbEHDx_8-8NkRnNm4W4O0X9RIEEMB63rlcttfghEoBEh4eoE0G1e3sx4GBzeEG495nXpWYM8GZavsGAAjcYJIiAmdOkKU6nNyn6CRjcr-9r4HsOviLiD-zPh7xKL7PcfBheb-K0wSdDegU_z2V4A1yDqxq2sjMkRbHedlH9gfz36bAwxxQoRuEA0X6AYhyjqd2c2FBcAW92M_2YH" />
+            <Image alt="Japa Mala" width={800} height={600} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjlm8tCQWnRn8P--lvkFYwDd2co4XzZ3Hm3EqhkZMxPp0SPQqd5ecgbit8jnyVjbEHDx_8-8NkRnNm4W4O0X9RIEEMB63rlcttfghEoBEh4eoE0G1e3sx4GBzeEG495nXpWYM8GZavsGAAjcYJIiAmdOkKU6nNyn6CRjcr-9r4HsOviLiD-zPh7xKL7PcfBheb-K0wSdDegU_z2V4A1yDqxq2sjMkRbHedlH9gfz36bAwxxQoRuEA0X6AYhyjqd2c2FBcAW92M_2YH" />
             <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
             <div className="absolute inset-0 bg-primary/5 mix-blend-overlay"></div>
             <div className="absolute bottom-0 left-0 p-6 w-full flex justify-between items-end">

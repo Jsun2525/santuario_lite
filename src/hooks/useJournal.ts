@@ -20,7 +20,7 @@ export function useJournal() {
         if (!user) return;
         const { data } = await supabase
             .from('journal_entries')
-            .select('*')
+            .select('id, created_at, content, mood, insight_received')
             .eq('user_id', user.id)
             .order('created_at', { ascending: false });
 
@@ -42,7 +42,7 @@ export function useJournal() {
         const { data, error } = await supabase
             .from('journal_entries')
             .insert(newEntry)
-            .select()
+            .select('id, created_at, content, mood, insight_received')
             .single();
 
         if (data && !error) {

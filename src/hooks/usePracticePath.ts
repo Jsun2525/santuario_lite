@@ -26,7 +26,7 @@ export function usePracticePath() {
         // 1. Fetch all steps configuration
         const { data: configSteps, error: configError } = await supabase
             .from('practice_path_steps')
-            .select('*')
+            .select('id, order_index, title, description, type, skool_course_id, skool_module_id')
             .order('order_index', { ascending: true });
 
         if (configError) {
@@ -37,7 +37,7 @@ export function usePracticePath() {
         // 2. Fetch user progress
         const { data: userProgress, error: progressError } = await supabase
             .from('user_path_progress')
-            .select('*')
+            .select('step_id, status')
             .eq('user_id', user.id);
 
         if (progressError) {
