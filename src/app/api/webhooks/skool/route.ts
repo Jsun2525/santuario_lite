@@ -1,10 +1,7 @@
+import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase/client";
 
-export default async function SkoolWebhook(req: Request) {
-    if (req.method !== "POST") {
-        return new Response("Method not allowed", { status: 405 });
-    }
-
+export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
         const { type, email, lesson_id, active, group_id } = body;
