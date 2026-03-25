@@ -4,59 +4,45 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/lib/supabase/client";
 import { useAuth } from "./useAuth";
 
-export interface TimerSettings {
-    duration_minutes: number;
-    preparation_seconds: number;
-}
-
-export function useMeditationTimer(initialDuration = 10) {
+export function useMeditationTimer() {
     const { user } = useAuth();
-    const [timeLeft, setTimeLeft] = useState(initialDuration * 60);
+    const [elapsed, setElapsed] = useState(0);
     const [isActive, setIsActive] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
-    const [mode, setMode] = useState<'prep' | 'meditation'>('prep');
-
-    // Track total time for DB insertion on completion.
-    const durationRef = useRef(initialDuration);
+    const startTimeRef = useRef<number | null>(null);
+    const pausedElapsedRef = useRef(0);
 
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null;
 
-        if (isActive && timeLeft > 0) {
+        if (isActive) {
             interval = setInterval(() => {
-                setTimeLeft((time) => time - 1);
+                if (startTimeRef.current !== null) {
+                    setElapsed(pausedElapsedRef.current + Math.floor((Date.now() - startTimeRef.current) / 1000));
+                }
             }, 1000);
-        } else if (isActive && timeLeft === 0) {
-            if (mode === 'prep') {
-                // Switch from preparation to meditation
-                setMode('meditation');
-                setTimeLeft(durationRef.current * 60);
-                // Optional: Play a starting bell sound here
-            } else {
-                // Meditation completed
-                setIsActive(false);
-                setIsCompleted(true);
-                handleCompletion();
-            }
         }
 
         return () => {
             if (interval) clearInterval(interval);
         };
-    }, [isActive, timeLeft, mode]);
+    }, [isActive]);
 
-    const handleCompletion = useCallback(async () => {
-        if (!user) return;
+    const handleCompletion = useCallback(async (totalSeconds: number) => {
+        if (!user || totalSeconds < 10) return; // min 10 seconds to count
+
+        const durationMinutes = Math.round(totalSeconds / 60);
+        const actualMinutes = Math.max(durationMinutes, 1); // at least 1 minute
 
         // 1. Log practice session
         await supabase.from('practice_logs').insert({
             user_id: user.id,
             practice_type: 'Meditación Silenciosa',
-            duration_minutes: durationRef.current,
-            notes: 'Completado desde el Timer de Meditación'
+            duration_minutes: actualMinutes,
+            notes: `Sesión de ${formatTime(totalSeconds)} completada`
         });
 
-        // 2. Add to total minutes in profile and handle Gamification
+        // 2. Add to total minutes in profile
         const { data: profile } = await supabase
             .from('profiles')
             .select('total_meditation_minutes')
@@ -64,7 +50,7 @@ export function useMeditationTimer(initialDuration = 10) {
             .single();
 
         if (profile) {
-            const newTotal = (profile.total_meditation_minutes || 0) + durationRef.current;
+            const newTotal = (profile.total_meditation_minutes || 0) + actualMinutes;
             await supabase
                 .from('profiles')
                 .update({ total_meditation_minutes: newTotal })
@@ -72,38 +58,59 @@ export function useMeditationTimer(initialDuration = 10) {
         }
     }, [user]);
 
-    const startTimer = (durationMinutes: number) => {
-        durationRef.current = durationMinutes;
-        setMode('prep');
-        setTimeLeft(5); // 5 seconds of prep time
+    const start = () => {
+        startTimeRef.current = Date.now();
+        pausedElapsedRef.current = 0;
+        setElapsed(0);
         setIsActive(true);
         setIsCompleted(false);
     };
 
-    const pauseTimer = () => setIsActive(false);
-    const resumeTimer = () => setIsActive(true);
-    const stopTimer = () => {
+    const pause = () => {
+        pausedElapsedRef.current = elapsed;
+        startTimeRef.current = null;
         setIsActive(false);
-        setTimeLeft(initialDuration * 60);
-        setMode('prep');
     };
 
-    // Format mm:ss
-    const formatTime = (seconds: number) => {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    const resume = () => {
+        startTimeRef.current = Date.now();
+        setIsActive(true);
+    };
+
+    const stop = async () => {
+        const finalElapsed = elapsed;
+        setIsActive(false);
+        setIsCompleted(true);
+        startTimeRef.current = null;
+        pausedElapsedRef.current = 0;
+        if (finalElapsed >= 10) {
+            await handleCompletion(finalElapsed);
+        }
+    };
+
+    const reset = () => {
+        setIsActive(false);
+        setIsCompleted(false);
+        setElapsed(0);
+        startTimeRef.current = null;
+        pausedElapsedRef.current = 0;
     };
 
     return {
-        timeLeftFormatted: formatTime(timeLeft),
-        timeLeft,
+        elapsed,
+        elapsedFormatted: formatTime(elapsed),
         isActive,
         isCompleted,
-        mode,
-        startTimer,
-        pauseTimer,
-        resumeTimer,
-        stopTimer
+        start,
+        pause,
+        resume,
+        stop,
+        reset
     };
+}
+
+function formatTime(seconds: number) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 }

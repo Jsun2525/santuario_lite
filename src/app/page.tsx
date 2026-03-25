@@ -65,6 +65,18 @@ export default function Dashboard() {
             </div>
           </Link>
 
+          {/* Meditation Practice */}
+          <Link href="/meditacion-libre" className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 flex items-center gap-5 active:bg-white/5 transition-colors cursor-pointer">
+            <div className="bg-primary/10 w-14 h-14 rounded-2xl flex items-center justify-center border border-primary/20">
+              <span className="material-symbols-outlined text-primary text-2xl">timer</span>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-base">Práctica Libre</h3>
+              <p className="text-[11px] text-slate-500 uppercase tracking-wider">Cronómetro de Meditación</p>
+            </div>
+            <span className="material-symbols-outlined text-slate-600">chevron_right</span>
+          </Link>
+
           {/* Library Link */}
           <Link href="/biblioteca" className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 flex items-center gap-5 active:bg-white/5 transition-colors cursor-pointer">
             <div className="bg-primary/10 w-14 h-14 rounded-2xl flex items-center justify-center border border-primary/20">
