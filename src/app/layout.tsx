@@ -1,24 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Serif, IBM_Plex_Sans, Playfair_Display } from "next/font/google";
+import { Manrope, Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 import PwaRegister from "@/components/PwaRegister";
 
-const plexSerif = IBM_Plex_Serif({
-  variable: "--font-plex-serif",
+const manrope = Manrope({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["300", "400", "600"],
-});
-
-const plexSans = IBM_Plex_Sans({
-  variable: "--font-plex-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const playfair = Playfair_Display({
-  variable: "--font-playfair",
+  variable: "--font-serif",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -51,7 +52,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
       <body
-        className={`${plexSerif.variable} ${plexSans.variable} ${playfair.variable} antialiased bg-background text-foreground`}
+        className={`${manrope.variable} ${playfair.variable} ${dmSans.variable} antialiased bg-background text-foreground`}
       >
         <PwaRegister />
         <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">

@@ -3,47 +3,62 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+const tabs = [
+    { label: 'Inicio', icon: 'home', href: '/', exact: true },
+    { label: 'Meditar', icon: 'self_improvement', href: '/biblioteca', exact: false },
+    { label: 'Practica', icon: 'bolt', href: '/meditacion-libre', exact: false, elevated: true },
+    { label: 'Comunidad', icon: 'groups', href: '/equipo', exact: false },
+    { label: 'Perfil', icon: 'person', href: '/perfil', exact: false },
+];
+
 export function BottomNav() {
     const pathname = usePathname();
 
+    const isActive = (href: string, exact: boolean) => {
+        if (exact) return pathname === href;
+        return pathname === href || pathname.startsWith(href + '/');
+    };
+
     return (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-8 pt-2">
-            <div className="max-w-md mx-auto glass shimmer-effect iridescent-border rounded-2xl px-2 py-3 flex justify-around items-center shadow-2xl">
-                <Link
-                    href="/"
-                    className={`flex flex-col items-center justify-center w-1/5 transition-colors ${pathname === '/' ? 'text-primary' : 'text-slate-400'}`}
-                >
-                    <span className={`material-symbols-outlined !text-[28px] ${pathname === '/' ? 'fill-[1]' : ''}`}>home</span>
-                    <span className="text-[9px] font-bold mt-1 uppercase tracking-tighter">Inicio</span>
-                </Link>
-                <Link
-                    href="/japamala"
-                    className={`flex flex-col items-center justify-center w-1/5 transition-colors ${pathname === '/japamala' ? 'text-primary' : 'text-slate-400'}`}
-                >
-                    <span className={`material-symbols-outlined !text-[28px] ${pathname === '/japamala' ? 'fill-[1]' : ''}`}>self_improvement</span>
-                    <span className="text-[9px] font-medium mt-1 uppercase tracking-tighter">Práctica</span>
-                </Link>
-                <Link
-                    href="/diario"
-                    className={`flex flex-col items-center justify-center w-1/5 transition-colors ${pathname === '/diario' ? 'text-primary' : 'text-slate-400'}`}
-                >
-                    <span className={`material-symbols-outlined !text-[28px] ${pathname === '/diario' ? 'fill-[1]' : ''}`}>auto_awesome</span>
-                    <span className="text-[9px] font-medium mt-1 uppercase tracking-tighter">Revelaciones</span>
-                </Link>
-                <Link
-                    href="/tu-camino"
-                    className={`flex flex-col items-center justify-center w-1/5 transition-colors ${pathname === '/tu-camino' ? 'text-primary' : 'text-slate-400'}`}
-                >
-                    <span className={`material-symbols-outlined !text-[28px] ${pathname === '/tu-camino' ? 'fill-[1]' : ''}`}>route</span>
-                    <span className="text-[9px] font-medium mt-1 uppercase tracking-tighter">Tu Camino</span>
-                </Link>
-                <Link
-                    href="/perfil"
-                    className={`flex flex-col items-center justify-center w-1/5 transition-colors ${pathname === '/perfil' ? 'text-primary' : 'text-slate-400'}`}
-                >
-                    <span className={`material-symbols-outlined !text-[28px] ${pathname === '/perfil' ? 'fill-[1]' : ''}`}>account_circle</span>
-                    <span className="text-[9px] font-medium mt-1 uppercase tracking-tighter">Perfil</span>
-                </Link>
+        <nav className="fixed bottom-0 left-0 right-0 z-50">
+            <div className="max-w-md mx-auto bg-[#0D0D1A]/90 backdrop-blur-lg border-t border-white/5 px-2 pt-2 pb-8 flex justify-around items-end">
+                {tabs.map((tab) => {
+                    const active = isActive(tab.href, !!tab.exact);
+
+                    if (tab.elevated) {
+                        return (
+                            <Link
+                                key={tab.href}
+                                href={tab.href}
+                                className="flex flex-col items-center justify-center w-1/5 -mt-6 transition-colors"
+                            >
+                                <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/40 border-[3px] border-[#0D0D1A]">
+                                    <span className="material-symbols-outlined !text-[28px] text-white fill-[1]">
+                                        {tab.icon}
+                                    </span>
+                                </div>
+                                <span className={`text-[10px] font-medium tracking-wide mt-1 ${active ? 'text-[#854ef4]' : 'text-slate-500'}`}>
+                                    {tab.label}
+                                </span>
+                            </Link>
+                        );
+                    }
+
+                    return (
+                        <Link
+                            key={tab.href}
+                            href={tab.href}
+                            className={`flex flex-col items-center justify-center w-1/5 transition-colors ${active ? 'text-[#854ef4]' : 'text-slate-500'}`}
+                        >
+                            <span className={`material-symbols-outlined !text-[28px] ${active ? 'fill-[1]' : ''}`}>
+                                {tab.icon}
+                            </span>
+                            <span className="text-[10px] font-medium tracking-wide mt-1">
+                                {tab.label}
+                            </span>
+                        </Link>
+                    );
+                })}
             </div>
         </nav>
     );

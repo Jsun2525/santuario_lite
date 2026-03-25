@@ -1,20 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #7B2FF7;
+  --color-primary: #854ef4;
+  --color-primary-dark: #6D28D9;
   --color-accent: #D4AF37;
-  --color-background: #020510;
+  --color-background: #0D0D1A;
   --color-foreground: #EDEDED;
   --color-success: #2ECC71;
   --color-zen-blue: #3B82F6;
   --color-bowl-gold: #D4AF37;
   --color-stellar-violet: #7B2FF7;
   --color-white-glow: #FFFFFF;
-  --color-background-dark: #020510;
+  --color-background-dark: #0D0D1A;
+  --color-card-dark: #151528;
+  --color-input-bg: #222240;
+  --color-teal-accent: #2DD4BF;
 
-  --font-heading: var(--font-plex-serif), serif;
-  --font-body: var(--font-plex-sans), sans-serif;
-  --font-accent: var(--font-playfair), serif;
+  --font-heading: var(--font-display), sans-serif;
+  --font-body: var(--font-display), sans-serif;
+  --font-accent: var(--font-serif), serif;
+  --font-sans: var(--font-dm-sans), sans-serif;
 
   --animate-aurora: aurora 10s ease-in-out infinite alternate;
   --animate-shimmer: shimmer 8s infinite linear;
@@ -22,6 +27,7 @@
   --animate-pulse-gentle: pulse-gentle 12s ease-in-out infinite;
   --animate-rotate-slow: rotate-slow 80s linear infinite;
   --animate-geometry-glow: geometry-glow 5s ease-in-out infinite;
+  --animate-fade-in: fade-in 0.3s ease-out;
 }
 
 @keyframes aurora {
@@ -110,6 +116,18 @@
   }
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer base {
   body {
     background-color: var(--color-background);
@@ -128,5 +146,35 @@
 }
 
 @utility gradient-text {
+  @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+}
+
+@utility violet-glow {
+  background: radial-gradient(circle at top center, rgba(139, 92, 246, 0.15) 0%, rgba(13, 13, 26, 0) 70%);
+}
+
+@utility glass-effect {
+  background: rgba(21, 21, 40, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(140, 37, 244, 0.2);
+}
+
+@utility text-glow {
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+@utility shimmer-effect {
+  @apply relative overflow-hidden;
+}
+
+@utility iridescent-border {
+  @apply border border-white/10 animate-iridescent;
+}
+
+@utility mystic-glow {
+  @apply bg-primary/10 blur-[120px] rounded-full;
+}
+
+@utility text-gradient {
   @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
 }
