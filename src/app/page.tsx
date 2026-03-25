@@ -1,139 +1,146 @@
-import Image from "next/image";
+"use client";
+
 import Link from "next/link";
 import { BottomNav } from "@/components/BottomNav";
+import { MoodCheckin } from "@/components/MoodCheckin";
+import { useAuth } from "@/hooks/useAuth";
+import { useMoodCheckin } from "@/hooks/useMoodCheckin";
+
+function getGreeting(): { label: string; greeting: string } {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) return { label: "Amanecer Sagrado", greeting: "Buenos d\u00edas" };
+  if (hour >= 12 && hour < 18) return { label: "Luz Interior", greeting: "Buenas tardes" };
+  if (hour >= 18 && hour < 22) return { label: "Atardecer Dorado", greeting: "Buenas noches" };
+  return { label: "Noche Estelar", greeting: "Buenas noches" };
+}
+
+function getFirstName(user: { user_metadata?: { full_name?: string } } | null): string {
+  const fullName = user?.user_metadata?.full_name;
+  if (!fullName) return "Viajero";
+  return fullName.split(" ")[0];
+}
+
+const QUICK_ACTIONS = [
+  { href: "/tu-camino", icon: "route", title: "Tu Camino", subtitle: "Progreso y Desbloqueos" },
+  { href: "/japamala", icon: "self_improvement", title: "Japa Mala", subtitle: "Pr\u00e1ctica Sagrada" },
+  { href: "/meditacion-libre", icon: "timer", title: "Pr\u00e1ctica Libre", subtitle: "Cron\u00f3metro" },
+  { href: "/diario", icon: "auto_stories", title: "Diario", subtitle: "Or\u00e1culo Interior" },
+  { href: "/sonidos", icon: "graphic_eq", title: "Sonidos", subtitle: "Frecuencias" },
+  { href: "/gratitud", icon: "favorite", title: "Gratitud", subtitle: "Diario 28 D\u00edas" },
+  { href: "/oraculo", icon: "auto_awesome", title: "Or\u00e1culo", subtitle: "Sabidur\u00eda Divina" },
+  { href: "/biblioteca", icon: "local_library", title: "Biblioteca", subtitle: "Meditaciones" },
+];
 
 export default function Dashboard() {
+  const { user } = useAuth();
+  const mood = useMoodCheckin();
+  const { label, greeting } = getGreeting();
+  const name = getFirstName(user);
+
   return (
     <>
-      <div className="fixed top-[-10%] left-[-20%] w-[80%] h-[60%] mystic-glow rounded-full pointer-events-none"></div>
-      <div className="fixed bottom-[-10%] right-[-20%] w-[80%] h-[60%] mystic-glow rounded-full pointer-events-none"></div>
+      {/* Ambient glow */}
+      <div className="fixed top-[-10%] left-[-20%] w-[80%] h-[60%] mystic-glow rounded-full pointer-events-none" />
+      <div className="fixed bottom-[-10%] right-[-20%] w-[80%] h-[60%] mystic-glow rounded-full pointer-events-none" />
 
       <div className="relative z-10 flex flex-col min-h-screen max-w-md mx-auto px-6 pb-32">
-        <header className="flex justify-between items-center pt-8 pb-10">
+        {/* Header */}
+        <header className="flex justify-between items-center pt-8 pb-6">
           <div className="flex flex-col">
-            <h1 className="text-gradient text-2xl font-extrabold tracking-tight">La Presencia</h1>
-            <p className="text-[8px] tracking-[0.2em] uppercase font-light text-slate-400">Santuario de Bienestar</p>
+            <span className="text-[10px] tracking-[0.25em] uppercase font-bold text-primary/80">
+              {label}
+            </span>
+            <h1 className="text-2xl font-bold text-slate-100 mt-0.5">
+              {greeting},{" "}
+              <span className="text-gradient">{name}</span>
+            </h1>
           </div>
-          <Link href="/perfil" className="px-5 py-2 rounded-full border border-primary/30 bg-primary/10 text-slate-100 text-xs font-medium active:scale-95 transition-all">
-            Mi Perfil
+          <Link
+            href="/perfil"
+            className="w-11 h-11 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center active:scale-95 transition-transform"
+          >
+            <span className="material-symbols-outlined text-primary text-xl">
+              auto_awesome
+            </span>
           </Link>
         </header>
 
         <main className="flex flex-col gap-5">
           {/* Daily Quote */}
-          <section className="glass-card shimmer-effect iridescent-border rounded-2xl p-6 text-center">
+          <section className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 text-center relative overflow-hidden">
             <div className="absolute -top-2 -left-2 opacity-5 pointer-events-none">
-              <span className="material-symbols-outlined text-6xl text-primary">format_quote</span>
+              <span className="material-symbols-outlined text-5xl text-primary">format_quote</span>
             </div>
-            <h3 className="text-[9px] tracking-[0.3em] uppercase font-bold text-primary/90 mb-3">Cita del Día</h3>
-            <p className="font-serif text-lg leading-relaxed text-slate-100 italic px-2 mb-2">
-              "El dolor es inevitable, el sufrimiento es optativo"
+            <h3 className="text-[9px] tracking-[0.3em] uppercase font-bold text-primary/90 mb-2">Cita del D\u00eda</h3>
+            <p className="font-serif text-base leading-relaxed text-slate-100 italic px-2 mb-1">
+              &ldquo;El dolor es inevitable, el sufrimiento es optativo&rdquo;
             </p>
-            <cite className="text-[9px] uppercase tracking-widest text-slate-500 not-italic">— Buda</cite>
+            <cite className="text-[9px] uppercase tracking-widest text-slate-500 not-italic">&mdash; Buda</cite>
           </section>
 
-          {/* Tu Camino - Duolingo Style Path */}
-          <Link href="/tu-camino" className="glass-card shimmer-effect iridescent-border rounded-2xl overflow-hidden group h-32 block cursor-pointer">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/10"></div>
-            <div className="absolute inset-0 flex items-center p-6 gap-6">
-              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30 shadow-[0_0_20px_rgba(123,47,247,0.3)]">
-                <span className="material-symbols-outlined text-white text-3xl">route</span>
-              </div>
-              <div>
-                <h2 className="font-serif text-xl text-white">Tu Camino</h2>
-                <p className="text-slate-400 text-[10px] uppercase tracking-widest font-bold">Progreso y Desbloqueos</p>
-              </div>
-              <div className="ml-auto">
-                <span className="material-symbols-outlined text-primary">chevron_right</span>
-              </div>
+          {/* Featured Meditation Card */}
+          <Link
+            href="/biblioteca"
+            className="glass-card shimmer-effect iridescent-border rounded-2xl overflow-hidden block relative h-40"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/10 to-accent/20" />
+            <div className="absolute inset-0 flex flex-col justify-end p-6">
+              <span className="text-[9px] tracking-[0.3em] uppercase font-bold text-primary/90 mb-1">
+                Meditaci\u00f3n Diaria
+              </span>
+              <h2 className="font-serif text-xl text-white leading-tight">
+                Encuentra tu Paz Interior
+              </h2>
+              <p className="text-slate-400 text-xs mt-1">15 min &middot; Gu\u00eda de Presencia</p>
+            </div>
+            <div className="absolute top-5 right-5 bg-primary/30 backdrop-blur-sm p-3 rounded-full border border-white/10">
+              <span className="material-symbols-outlined text-white text-2xl">play_arrow</span>
             </div>
           </Link>
 
-          {/* Japa Mala */}
-          <Link href="/japamala" className="glass-card shimmer-effect iridescent-border rounded-2xl overflow-hidden group h-48 block cursor-pointer">
-            <Image alt="Japa Mala" width={800} height={600} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjlm8tCQWnRn8P--lvkFYwDd2co4XzZ3Hm3EqhkZMxPp0SPQqd5ecgbit8jnyVjbEHDx_8-8NkRnNm4W4O0X9RIEEMB63rlcttfghEoBEh4eoE0G1e3sx4GBzeEG495nXpWYM8GZavsGAAjcYJIiAmdOkKU6nNyn6CRjcr-9r4HsOviLiD-zPh7xKL7PcfBheb-K0wSdDegU_z2V4A1yDqxq2sjMkRbHedlH9gfz36bAwxxQoRuEA0X6AYhyjqd2c2FBcAW92M_2YH" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
-            <div className="absolute inset-0 bg-primary/5 mix-blend-overlay"></div>
-            <div className="absolute bottom-0 left-0 p-6 w-full flex justify-between items-end">
-              <div>
-                <h2 className="font-serif text-2xl text-white">El Arte de Ver a Dios</h2>
-                <p className="text-slate-300 text-xs font-light">Práctica Sagrada de Japa Mala</p>
-              </div>
-              <div className="bg-primary/40 backdrop-blur-xl p-3 rounded-full border border-white/20 shadow-lg">
-                <span className="material-symbols-outlined text-white text-2xl">self_improvement</span>
-              </div>
-            </div>
-          </Link>
-
-          {/* Meditation Practice */}
-          <Link href="/meditacion-libre" className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 flex items-center gap-5 active:bg-white/5 transition-colors cursor-pointer">
-            <div className="bg-primary/10 w-14 h-14 rounded-2xl flex items-center justify-center border border-primary/20">
-              <span className="material-symbols-outlined text-primary text-2xl">timer</span>
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-base">Práctica Libre</h3>
-              <p className="text-[11px] text-slate-500 uppercase tracking-wider">Cronómetro de Meditación</p>
-            </div>
-            <span className="material-symbols-outlined text-slate-600">chevron_right</span>
-          </Link>
-
-          {/* Library Link */}
-          <Link href="/biblioteca" className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 flex items-center gap-5 active:bg-white/5 transition-colors cursor-pointer">
-            <div className="bg-primary/10 w-14 h-14 rounded-2xl flex items-center justify-center border border-primary/20">
-              <span className="material-symbols-outlined text-primary text-2xl">local_library</span>
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-base">Meditaciones</h3>
-              <p className="text-[11px] text-slate-500 uppercase tracking-wider">Biblioteca de Sabiduría</p>
-            </div>
-            <span className="material-symbols-outlined text-slate-600">chevron_right</span>
-          </Link>
-
-          {/* Journal Link */}
-          <Link href="/diario" className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 flex items-center gap-5 active:bg-white/5 transition-colors cursor-pointer">
-            <div className="bg-primary/10 w-14 h-14 rounded-2xl flex items-center justify-center border border-primary/20">
-              <span className="material-symbols-outlined text-primary text-2xl">auto_stories</span>
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-base">Diario &amp; IA</h3>
-              <p className="text-[11px] text-slate-500 uppercase tracking-wider">Tu Oráculo Interior</p>
-            </div>
-            <span className="material-symbols-outlined text-slate-600">chevron_right</span>
-          </Link>
-
-          {/* Binaural Player */}
-          <Link href="/sonidos" className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 flex items-center gap-5 active:bg-white/5 transition-colors cursor-pointer">
-            <div className="bg-primary/10 w-14 h-14 rounded-full flex items-center justify-center border border-primary/20">
-              <span className="material-symbols-outlined text-primary text-2xl">graphic_eq</span>
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-base">Sonidos Binaurales</h3>
-              <p className="text-[11px] text-slate-500 uppercase tracking-wider">Frecuencias de Sanación</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary/80">play_circle</span>
-            </div>
-          </Link>
-
-          {/* Team / Gratitude (Replaced Team with Gratitude to maintain parity) */}
-          <Link href="/gratitud" className="glass-card shimmer-effect iridescent-border rounded-2xl p-5 flex items-center gap-5 active:bg-white/5 transition-colors cursor-pointer">
-            <div className="bg-primary/10 w-14 h-14 rounded-full flex items-center justify-center border border-primary/20 overflow-hidden">
-              <span className="material-symbols-outlined text-primary text-2xl">favorite</span>
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-base">Gratitud</h3>
-              <p className="text-[11px] text-slate-500 uppercase tracking-wider">Diario de 28 Días</p>
-            </div>
-            <span className="material-symbols-outlined text-slate-600">chevron_right</span>
-          </Link>
+          {/* Quick Actions Grid */}
+          <div className="grid grid-cols-2 gap-3">
+            {QUICK_ACTIONS.map((action) => (
+              <Link
+                key={action.href}
+                href={action.href}
+                className="glass-card shimmer-effect iridescent-border rounded-2xl p-4 flex flex-col gap-3 active:scale-[0.97] transition-transform"
+              >
+                <div className="w-11 h-11 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-primary text-xl">
+                    {action.icon}
+                  </span>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm text-slate-100">{action.title}</h3>
+                  <p className="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">
+                    {action.subtitle}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </main>
 
-        <footer className="mt-16 mb-8 text-center">
+        <footer className="mt-12 mb-8 text-center">
           <p className="text-slate-700 text-[9px] tracking-[0.4em] uppercase font-bold">
             Inner Path | Santuario de Bienestar
           </p>
         </footer>
       </div>
+
+      {/* Mood Check-in Modal */}
+      {mood.showCheckin && (
+        <MoodCheckin
+          selectedMood={mood.selectedMood}
+          setSelectedMood={mood.setSelectedMood}
+          energyLevel={mood.energyLevel}
+          setEnergyLevel={mood.setEnergyLevel}
+          submit={mood.submit}
+          isSubmitting={mood.isSubmitting}
+          dismiss={mood.dismiss}
+        />
+      )}
 
       <BottomNav />
     </>
