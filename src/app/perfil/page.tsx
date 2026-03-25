@@ -105,7 +105,7 @@ export default function PerfilPage() {
                                     <p className="text-xs text-slate-500">Tiempo total acumulado</p>
                                 </div>
                             </div>
-                            <div className="text-lg font-bold text-primary">{profile.meditationMinutes}m</div>
+                            <div className="text-lg font-bold text-primary">{profile.meditationFormatted}</div>
                         </div>
                         <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex items-center justify-between">
                             <div className="flex items-center gap-4">

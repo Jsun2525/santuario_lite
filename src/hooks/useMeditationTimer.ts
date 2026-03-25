@@ -29,31 +29,35 @@ export function useMeditationTimer() {
     }, [isActive]);
 
     const handleCompletion = useCallback(async (totalSeconds: number) => {
-        if (!user || totalSeconds < 10) return; // min 10 seconds to count
+        if (!user || totalSeconds < 10) return;
 
-        const durationMinutes = Math.round(totalSeconds / 60);
-        const actualMinutes = Math.max(durationMinutes, 1); // at least 1 minute
+        const durationMinutes = Math.floor(totalSeconds / 60);
 
-        // 1. Log practice session
+        // 1. Log practice session with actual seconds in notes
         await supabase.from('practice_logs').insert({
             user_id: user.id,
             practice_type: 'Meditación Silenciosa',
-            duration_minutes: actualMinutes,
-            notes: `Sesión de ${formatTime(totalSeconds)} completada`
+            duration_minutes: durationMinutes,
+            notes: `${totalSeconds}s | ${formatTime(totalSeconds)}`
         });
 
-        // 2. Add to total minutes in profile
+        // 2. Add exact seconds to profile
         const { data: profile } = await supabase
             .from('profiles')
-            .select('total_meditation_minutes')
+            .select('total_meditation_minutes, total_meditation_seconds')
             .eq('id', user.id)
             .single();
 
         if (profile) {
-            const newTotal = (profile.total_meditation_minutes || 0) + actualMinutes;
+            const currentSeconds = profile.total_meditation_seconds || 0;
+            const newTotalSeconds = currentSeconds + totalSeconds;
+            const newTotalMinutes = Math.floor(newTotalSeconds / 60);
             await supabase
                 .from('profiles')
-                .update({ total_meditation_minutes: newTotal })
+                .update({
+                    total_meditation_minutes: newTotalMinutes,
+                    total_meditation_seconds: newTotalSeconds
+                })
                 .eq('id', user.id);
         }
     }, [user]);
