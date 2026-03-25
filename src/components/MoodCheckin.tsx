@@ -49,10 +49,10 @@ export function MoodCheckin({
         {/* Heading */}
         <div className="text-center mb-8">
           <h2 className="text-slate-100 font-serif text-3xl leading-tight">
-            \u00bfC\u00f3mo te sientes hoy?
+            ¿Cómo te sientes hoy?
           </h2>
           <p className="text-slate-400 text-sm mt-2">
-            Tu energ\u00eda gu\u00eda tu pr\u00e1ctica diaria
+            Tu energía guía tu práctica diaria
           </p>
         </div>
 
@@ -95,7 +95,7 @@ export function MoodCheckin({
         {/* Energy Level */}
         <div className="mb-10">
           <h4 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-4">
-            Nivel de Energ\u00eda
+            Nivel de Energía
           </h4>
           <div className="flex rounded-xl overflow-hidden border border-white/10 bg-white/5">
             {ENERGY_LEVELS.map((level) => (

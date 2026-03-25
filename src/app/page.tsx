@@ -8,7 +8,7 @@ import { useMoodCheckin } from "@/hooks/useMoodCheckin";
 
 function getGreeting(): { label: string; greeting: string } {
   const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12) return { label: "Amanecer Sagrado", greeting: "Buenos d\u00edas" };
+  if (hour >= 5 && hour < 12) return { label: "Amanecer Sagrado", greeting: "Buenos días" };
   if (hour >= 12 && hour < 18) return { label: "Luz Interior", greeting: "Buenas tardes" };
   if (hour >= 18 && hour < 22) return { label: "Atardecer Dorado", greeting: "Buenas noches" };
   return { label: "Noche Estelar", greeting: "Buenas noches" };
@@ -22,12 +22,12 @@ function getFirstName(user: { user_metadata?: { full_name?: string } } | null): 
 
 const QUICK_ACTIONS = [
   { href: "/tu-camino", icon: "route", title: "Tu Camino", subtitle: "Progreso y Desbloqueos" },
-  { href: "/japamala", icon: "self_improvement", title: "Japa Mala", subtitle: "Pr\u00e1ctica Sagrada" },
-  { href: "/meditacion-libre", icon: "timer", title: "Pr\u00e1ctica Libre", subtitle: "Cron\u00f3metro" },
-  { href: "/diario", icon: "auto_stories", title: "Diario", subtitle: "Or\u00e1culo Interior" },
+  { href: "/japamala", icon: "self_improvement", title: "Japa Mala", subtitle: "Práctica Sagrada" },
+  { href: "/meditacion-libre", icon: "timer", title: "Práctica Libre", subtitle: "Cronómetro" },
+  { href: "/diario", icon: "auto_stories", title: "Diario", subtitle: "Oráculo Interior" },
   { href: "/sonidos", icon: "graphic_eq", title: "Sonidos", subtitle: "Frecuencias" },
-  { href: "/gratitud", icon: "favorite", title: "Gratitud", subtitle: "Diario 28 D\u00edas" },
-  { href: "/oraculo", icon: "auto_awesome", title: "Or\u00e1culo", subtitle: "Sabidur\u00eda Divina" },
+  { href: "/gratitud", icon: "favorite", title: "Gratitud", subtitle: "Diario 28 Días" },
+  { href: "/oraculo", icon: "auto_awesome", title: "Oráculo", subtitle: "Sabiduría Divina" },
   { href: "/biblioteca", icon: "local_library", title: "Biblioteca", subtitle: "Meditaciones" },
 ];
 
@@ -71,7 +71,7 @@ export default function Dashboard() {
             <div className="absolute -top-2 -left-2 opacity-5 pointer-events-none">
               <span className="material-symbols-outlined text-5xl text-primary">format_quote</span>
             </div>
-            <h3 className="text-[9px] tracking-[0.3em] uppercase font-bold text-primary/90 mb-2">Cita del D\u00eda</h3>
+            <h3 className="text-[9px] tracking-[0.3em] uppercase font-bold text-primary/90 mb-2">Cita del Día</h3>
             <p className="font-serif text-base leading-relaxed text-slate-100 italic px-2 mb-1">
               &ldquo;El dolor es inevitable, el sufrimiento es optativo&rdquo;
             </p>
@@ -86,12 +86,12 @@ export default function Dashboard() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/10 to-accent/20" />
             <div className="absolute inset-0 flex flex-col justify-end p-6">
               <span className="text-[9px] tracking-[0.3em] uppercase font-bold text-primary/90 mb-1">
-                Meditaci\u00f3n Diaria
+                Meditación Diaria
               </span>
               <h2 className="font-serif text-xl text-white leading-tight">
                 Encuentra tu Paz Interior
               </h2>
-              <p className="text-slate-400 text-xs mt-1">15 min &middot; Gu\u00eda de Presencia</p>
+              <p className="text-slate-400 text-xs mt-1">15 min &middot; Guía de Presencia</p>
             </div>
             <div className="absolute top-5 right-5 bg-primary/30 backdrop-blur-sm p-3 rounded-full border border-white/10">
               <span className="material-symbols-outlined text-white text-2xl">play_arrow</span>
