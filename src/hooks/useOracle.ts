@@ -25,19 +25,26 @@ export function useOracle() {
 
       // Check if user already has a quote for today
       const today = new Date().toISOString().split("T")[0];
-      const { data: existing } = await supabase
+      const { data: existingRows } = await supabase
         .from("user_oracle_history")
-        .select("quote_id, oracle_quotes(*)")
+        .select("quote_id")
         .eq("user_id", user.id)
         .eq("viewed_date", today)
-        .single();
+        .limit(1);
 
-      if (existing?.oracle_quotes) {
-        const q = existing.oracle_quotes as unknown as OracleQuote;
-        setQuote(q);
-        await checkFavorite(user.id, q.id);
-        setLoading(false);
-        return;
+      if (existingRows && existingRows.length > 0) {
+        const { data: todayQuote } = await supabase
+          .from("oracle_quotes")
+          .select("*")
+          .eq("id", existingRows[0].quote_id)
+          .single();
+
+        if (todayQuote) {
+          setQuote(todayQuote);
+          await checkFavorite(user.id, todayQuote.id);
+          setLoading(false);
+          return;
+        }
       }
 
       // Get IDs the user has already seen
