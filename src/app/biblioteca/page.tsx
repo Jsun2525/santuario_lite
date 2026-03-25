@@ -1,114 +1,157 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BottomNav } from "@/components/BottomNav";
 
+const filters = [
+    { label: "Explorar", id: "explorar" },
+    { label: "Favoritos", id: "favoritos" },
+    { label: "Zen", id: "zen" },
+];
+
+const categories = [
+    { label: "Iniciación", emoji: "🧘", gradient: "from-indigo-600 to-purple-700" },
+    { label: "Cuerpo Luz", emoji: "✨", gradient: "from-violet-600 to-fuchsia-700" },
+    { label: "Sueño Profundo", emoji: "🌙", gradient: "from-blue-600 to-cyan-700" },
+    { label: "Abundancia", emoji: "💎", gradient: "from-rose-600 to-orange-600" },
+];
+
+const newArrivals = [
+    {
+        title: "Frecuencia de Oro",
+        description: "528Hz binaural",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA94bWIIRUnDpsY31afssg52wa9EmwOIP2Mcy0-dYm1LkTJdMPs66Uft01d7L4Qq8EQNwzzQk-9gq81VVWdKD9ZpnUh7tqSZ3wQFlvSx3wef2oW0LLGy6rgOl2NFBpSu67bD9K_RMzAdSFSPX6EdOpN7jtUNPUJ1gGYxcnmqjUdpLGdW_XyATZgKH7FioFTTi77bxJrjN38hS7MBfW_MnJZqVyPUZa6ijoOJ3wsoZYU3go4iG2wQWnulXQUqk8-ZjeP0BAhBq1Wd_Fq",
+    },
+    {
+        title: "Sanación Ancestral",
+        description: "Chamánica",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuB80eK-bNcrS1zSqZ4NwsHGSaArXpRl1-srstxM09Dvl8PuHMyxGkNmZhAy_p8RHdV5SPdcHOkzE2RzwW53EvgB-gqG5tJJ-H7tm6oHk8tk3GHCAH9zpPWIFE6bHTTR2V1Alp51Y45XUM5dKk7Rj5UWEauQU8v0FZrYDAxvZkt_YHQJNpTp1sjDi-Ki_-L-haTxIm3ruN6OB6pFU8IIkDEnii3hYw9Cba6ud4bU2LYe4kfq6cIIt9IzBWngeVBLkTuODuFPztKGS979",
+    },
+];
+
 export default function BibliotecaPage() {
+    const [activeFilter, setActiveFilter] = useState("explorar");
+
     return (
-        <div className="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen bg-[radial-gradient(at_0%_0%,rgba(125,48,248,0.15)_0px,transparent_50%),radial-gradient(at_100%_100%,rgba(125,48,248,0.1)_0px,transparent_50%)] selection:bg-primary/30">
-            <header className="sticky top-0 z-50 px-6 pt-12 pb-6 bg-[#0f0a19]/80 backdrop-blur-xl border-b border-white/5">
+        <div className="min-h-screen bg-[#0D0D1A] text-white font-[Manrope] max-w-[430px] mx-auto relative">
+            {/* Header */}
+            <header className="px-5 pt-12 pb-4">
                 <div className="flex items-center justify-between mb-6">
-                    <div>
-                        <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-primary/60">Biblioteca</h1>
-                        <p className="text-xs font-medium text-slate-400 uppercase tracking-widest mt-1">Santuario de Bienestar</p>
+                    <div className="flex items-center gap-3">
+                        <div className="size-10 rounded-full bg-[#854ef4]/20 flex items-center justify-center">
+                            <span className="material-symbols-outlined text-[#854ef4] text-[20px]">person</span>
+                        </div>
+                        <h1 className="font-[Playfair_Display] text-3xl font-bold">Biblioteca</h1>
                     </div>
-                    <div className="size-10 rounded-full glass flex items-center justify-center border-primary/20">
-                        <span className="material-symbols-outlined text-primary text-[20px]">notifications</span>
-                    </div>
+                    <button className="size-10 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center">
+                        <span className="material-symbols-outlined text-white/70 text-[20px]">notifications</span>
+                    </button>
                 </div>
 
-                <div className="relative group">
+                {/* Search */}
+                <div className="relative">
                     <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                        <span className="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+                        <span className="material-symbols-outlined text-[#ad92c9]">search</span>
                     </div>
                     <input
-                        className="w-full bg-white/5 border border-white/10 rounded-full py-3.5 pl-12 pr-4 focus:ring-2 focus:ring-primary/40 focus:border-primary/50 focus:bg-white/10 transition-all placeholder:text-slate-500 text-sm outline-none"
-                        placeholder="Buscar meditación o guía..."
+                        className="w-full bg-[#222240] rounded-xl h-12 pl-12 pr-4 text-sm placeholder:text-[#ad92c9]/60 outline-none focus:ring-2 focus:ring-[#854ef4]/40 transition-all"
+                        placeholder="Explorar el cosmos interior..."
                         type="text"
                     />
                 </div>
 
-                <div className="flex gap-3 mt-6 overflow-x-auto pb-2 scrollbar-hide">
-                    <button className="px-5 py-2 rounded-full bg-primary text-white text-xs font-semibold whitespace-nowrap shadow-lg shadow-primary/20">Todo</button>
-                    <button className="px-5 py-2 rounded-full glass text-slate-300 text-xs font-medium whitespace-nowrap hover:bg-white/10 transition-colors">Iniciación</button>
-                    <button className="px-5 py-2 rounded-full glass text-slate-300 text-xs font-medium whitespace-nowrap hover:bg-white/10 transition-colors">Cuerpo de Luz</button>
-                    <button className="px-5 py-2 rounded-full glass text-slate-300 text-xs font-medium whitespace-nowrap hover:bg-white/10 transition-colors">Silencio</button>
+                {/* Filter pills */}
+                <div className="flex gap-3 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+                    {filters.map((f) => (
+                        <button
+                            key={f.id}
+                            onClick={() => setActiveFilter(f.id)}
+                            className={`px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${
+                                activeFilter === f.id
+                                    ? "bg-[#854ef4] text-white"
+                                    : "bg-[#362348] text-[#ad92c9]"
+                            }`}
+                        >
+                            {f.label}
+                        </button>
+                    ))}
                 </div>
             </header>
 
-            <main className="px-6 pb-32">
-                <section className="mt-8">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-lg font-bold">Iniciación</h2>
-                        <button className="text-primary text-xs font-semibold">Ver todos</button>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                        <Link href="/sonidos" className="relative group rounded-xl overflow-hidden aspect-[4/5] glass border-white/5 block">
-                            <Image width={600} height={800} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJqLs9z5zXZCj8A2dfQBSZIBZ0AfABTfUeILZ8zZwT2PaVH9zxV1Wak17U4so7T7GrM3bPB_PUsOqY-cEi1Heaha_QDVfChDiV5kUCsUGHJUdW8aaspV_kAa5zzU04dgiyc6lR3mBVkAs0BmI6RW2jh27O_dLaTkHai_QAVgtTYx2CigXK7mKj5TZ8HnGfDec-EwHa-we_t0tSQY4bKRbsHDhr9dUDq4eb-_iXtVWXvr2jYXfqLIZnT4F9Ijs4A5mOk7Qj_oX9wWXH" alt="Respiración" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
-                            <div className="absolute top-3 right-3 px-2 py-1 bg-primary/20 backdrop-blur-md border rounded-full text-[10px] font-bold text-white uppercase tracking-tighter border-primary/30">10 min</div>
-                            <div className="absolute bottom-4 left-4 right-4">
-                                <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Nivel 1</p>
-                                <h3 className="text-sm font-bold leading-tight">Respiración Consciente</h3>
-                            </div>
-                        </Link>
-                        <Link href="/sonidos" className="relative group rounded-xl overflow-hidden aspect-[4/5] glass border-white/5 block">
-                            <Image width={600} height={800} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQTMT7rIdZGrnJb_LBZdE7_E3wJV6z-9-tOhJiANlG2ijLSPzQ5aHYCutKRw0v8dUylWgEffUNa26VLsGWXh-w0-k4gbp2Wm9QYPxKdH_h3XO7OyqQcqooS66W0CQDK4csSvbuiQMfQGA3f6OnLqJ2aB7cJ_O7JeVOsxnDDqyC07BeQbr2jkKOVMEKAN4J4NquJXAp-o6SiF8sHPkkHtxLzxgJZT8PKBKWHSKC9oBJQoWHINl-KCtbCL2bFUhfGHtS45pDZSkeZfhj" alt="Presencia" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
-                            <div className="absolute top-3 right-3 px-2 py-1 bg-primary/20 backdrop-blur-md border rounded-full text-[10px] font-bold text-white uppercase tracking-tighter border-primary/30">15 min</div>
-                            <div className="absolute bottom-4 left-4 right-4">
-                                <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Guía</p>
-                                <h3 className="text-sm font-bold leading-tight">Presencia en el Ahora</h3>
-                            </div>
-                        </Link>
-                    </div>
-                </section>
-
-                <section className="mt-10">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-lg font-bold">Cuerpo de Luz</h2>
-                        <button className="text-primary text-xs font-semibold">Explorar</button>
-                    </div>
-                    <Link href="/sonidos" className="relative block rounded-xl overflow-hidden h-48 glass border-primary/20 group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary/40 to-transparent z-10"></div>
-                        <Image width={800} height={600} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt81yXdVlDXcTs-lQH7CViFa9wdcPG314d9zMhliXVPYwXxTUNk4pFQAMqVkbLs1HSTgSPK7ad1D49MlaHfxn75JS_tGZ3LzmDapmxkJdTvwGnPQUEblrlGEGDC_OKPEBWzaQBN7yOWJ1PYSwGtUBA6BHsq1EgTvfcUxa7Lo6WjM1zTt2kB0lD1traap8UoUyXxn_O9mYPesg9MjDKK0mWGIP4-olurBZqwLVSXoz3JVQlbpKnQwG8OsM-syWBsWHY8tjokG2xW5MN" alt="Chakras" />
-                        <div className="absolute inset-0 z-20 p-6 flex flex-col justify-center">
-                            <span className="px-2 py-1 bg-white/20 backdrop-blur-md rounded-full text-[9px] font-bold text-white uppercase tracking-widest w-fit mb-3">Avanzado</span>
-                            <h3 className="text-xl font-extrabold mb-2">Activación de Chakras</h3>
-                            <p className="text-xs text-white/70 max-w-[180px] leading-relaxed">Sintoniza tu frecuencia vibratoria a través del color y sonido.</p>
+            <main className="px-5 pb-32">
+                {/* Featured Card */}
+                <section className="mt-4">
+                    <Link href="/sonidos" className="relative block rounded-2xl overflow-hidden aspect-[4/5]">
+                        <Image
+                            width={600}
+                            height={750}
+                            className="absolute inset-0 w-full h-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt81yXdVlDXcTs-lQH7CViFa9wdcPG314d9zMhliXVPYwXxTUNk4pFQAMqVkbLs1HSTgSPK7ad1D49MlaHfxn75JS_tGZ3LzmDapmxkJdTvwGnPQUEblrlGEGDC_OKPEBWzaQBN7yOWJ1PYSwGtUBA6BHsq1EgTvfcUxa7Lo6WjM1zTt2kB0lD1traap8UoUyXxn_O9mYPesg9MjDKK0mWGIP4-olurBZqwLVSXoz3JVQlbpKnQwG8OsM-syWBsWHY8tjokG2xW5MN"
+                            alt="Conexión Estelar con la Fuente"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                        <div className="absolute top-4 left-4">
+                            <span className="px-3 py-1 bg-[#854ef4] rounded-full text-xs font-bold uppercase tracking-wider">
+                                Destacado
+                            </span>
                         </div>
-                        <div className="absolute right-6 bottom-6 z-30">
-                            <div className="size-12 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/50">
-                                <span className="material-symbols-outlined text-white fill-1">play_arrow</span>
+                        <div className="absolute bottom-6 left-5 right-5">
+                            <h2 className="font-[Playfair_Display] text-3xl font-bold leading-tight mb-2">
+                                Conexión Estelar con la Fuente
+                            </h2>
+                            <p className="text-sm text-white/70 mb-4">22 min · Avanzado</p>
+                            <div className="size-14 rounded-full bg-[#854ef4] flex items-center justify-center shadow-lg shadow-[#854ef4]/50">
+                                <span className="material-symbols-outlined text-white text-3xl fill-1">play_arrow</span>
                             </div>
                         </div>
                     </Link>
                 </section>
 
-                <section className="mt-10">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-lg font-bold">Silencio Interior</h2>
+                {/* Categories */}
+                <section className="mt-8">
+                    <h2 className="font-[Playfair_Display] text-xl font-bold mb-4">Categorías</h2>
+                    <div className="grid grid-cols-2 gap-3">
+                        {categories.map((cat) => (
+                            <button
+                                key={cat.label}
+                                className={`h-32 rounded-2xl bg-gradient-to-br ${cat.gradient} flex flex-col items-center justify-center gap-2 transition-transform active:scale-95`}
+                            >
+                                <span className="text-3xl">{cat.emoji}</span>
+                                <span className="text-sm font-semibold">{cat.label}</span>
+                            </button>
+                        ))}
                     </div>
-                    <div className="space-y-4">
-                        <Link href="/meditacion-libre" className="flex items-center p-3 glass rounded-xl border-white/5 hover:bg-white/5 transition-colors">
-                            <div className="size-14 rounded-lg overflow-hidden shrink-0">
-                                <Image width={400} height={400} className="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA94bWIIRUnDpsY31afssg52wa9EmwOIP2Mcy0-dYm1LkTJdMPs66Uft01d7L4Qq8EQNwzzQk-9gq81VVWdKD9ZpnUh7tqSZ3wQFlvSx3wef2oW0LLGy6rgOl2NFBpSu67bD9K_RMzAdSFSPX6EdOpN7jtUNPUJ1gGYxcnmqjUdpLGdW_XyATZgKH7FioFTTi77bxJrjN38hS7MBfW_MnJZqVyPUZa6ijoOJ3wsoZYU3go4iG2wQWnulXQUqk8-ZjeP0BAhBq1Wd_Fq" alt="Vacío" />
+                </section>
+
+                {/* Nuevas Llegadas */}
+                <section className="mt-8">
+                    <h2 className="font-[Playfair_Display] text-xl font-bold mb-4">Nuevas Llegadas</h2>
+                    <div className="space-y-3">
+                        {newArrivals.map((item) => (
+                            <div
+                                key={item.title}
+                                className="flex items-center p-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl"
+                            >
+                                <div className="size-16 rounded-xl overflow-hidden shrink-0">
+                                    <Image
+                                        width={200}
+                                        height={200}
+                                        className="w-full h-full object-cover"
+                                        src={item.image}
+                                        alt={item.title}
+                                    />
+                                </div>
+                                <div className="ml-4 flex-1 min-w-0">
+                                    <h4 className="text-sm font-bold truncate">{item.title}</h4>
+                                    <p className="text-xs text-[#ad92c9] mt-0.5">{item.description}</p>
+                                </div>
+                                <button className="shrink-0 ml-2">
+                                    <span className="material-symbols-outlined text-white/40">more_vert</span>
+                                </button>
                             </div>
-                            <div className="ml-4 flex-1">
-                                <h4 className="text-sm font-bold">Vacío Absoluto</h4>
-                                <p className="text-xs text-slate-400">Zen • Timer</p>
-                            </div>
-                            <span className="material-symbols-outlined text-slate-500">more_vert</span>
-                        </Link>
-                        <Link href="/sonidos" className="flex items-center p-3 glass rounded-xl border-white/5 hover:bg-white/5 transition-colors">
-                            <div className="size-14 rounded-lg overflow-hidden shrink-0">
-                                <Image width={400} height={400} className="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB80eK-bNcrS1zSqZ4NwsHGSaArXpRl1-srstxM09Dvl8PuHMyxGkNmZhAy_p8RHdV5SPdcHOkzE2RzwW53EvgB-gqG5tJJ-H7tm6oHk8tk3GHCAH9zpPWIFE6bHTTR2V1Alp51Y45XUM5dKk7Rj5UWEauQU8v0FZrYDAxvZkt_YHQJNpTp1sjDi-Ki_-L-haTxIm3ruN6OB6pFU8IIkDEnii3hYw9Cba6ud4bU2LYe4kfq6cIIt9IzBWngeVBLkTuODuFPztKGS979" alt="Principiante" />
-                            </div>
-                            <div className="ml-4 flex-1">
-                                <h4 className="text-sm font-bold">Mente de Principiante</h4>
-                                <p className="text-xs text-slate-400">Vipassana • 20 min</p>
-                            </div>
-                            <span className="material-symbols-outlined text-slate-500">more_vert</span>
-                        </Link>
+                        ))}
                     </div>
                 </section>
             </main>
