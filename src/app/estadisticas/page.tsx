@@ -5,7 +5,7 @@ import { useStatistics } from "@/hooks/useStatistics";
 import { BottomNav } from "@/components/BottomNav";
 
 export default function EstadisticasPage() {
-  const { timeframe, setTimeframe, moodData, presenceData, totalMinutes, moodLabel } = useStatistics();
+  const { timeframe, setTimeframe, moodData, presenceData, totalMinutes, moodLabel, insights } = useStatistics();
 
   const maxMood = Math.max(...moodData.map(d => d.value), 1);
   const maxPresence = Math.max(...presenceData.map(d => d.value), 1);
@@ -116,29 +116,22 @@ export default function EstadisticasPage() {
 
       {/* Insights */}
       <section className="px-5 space-y-3">
-        <div className="bg-[#2a2416] rounded-2xl p-4 flex items-start gap-4">
-          <div className="w-10 h-10 rounded-xl bg-[#f9bd24]/10 flex items-center justify-center flex-shrink-0">
-            <span className="material-symbols-rounded text-[#f9bd24]">trending_up</span>
+        {insights.map((insight, i) => (
+          <div key={i} className="bg-[#2a2416] rounded-2xl p-4 flex items-start gap-4">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: `${insight.color}15` }}
+            >
+              <span className="material-symbols-rounded" style={{ color: insight.color }}>
+                {insight.icon}
+              </span>
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-white">{insight.title}</p>
+              <p className="text-xs text-white/50 mt-0.5">{insight.description}</p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm font-semibold text-white">30% más positividad</p>
-            <p className="text-xs text-white/50 mt-0.5">
-              Tu estado de ánimo ha mejorado comparado con la semana anterior. ¡Sigue así!
-            </p>
-          </div>
-        </div>
-
-        <div className="bg-[#2a2416] rounded-2xl p-4 flex items-start gap-4">
-          <div className="w-10 h-10 rounded-xl bg-[#2dd4bf]/10 flex items-center justify-center flex-shrink-0">
-            <span className="material-symbols-rounded text-[#2dd4bf]">dark_mode</span>
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-white">Sueño reparador</p>
-            <p className="text-xs text-white/50 mt-0.5">
-              Las meditaciones nocturnas están mejorando tu calidad de descanso.
-            </p>
-          </div>
-        </div>
+        ))}
       </section>
 
       <BottomNav />
