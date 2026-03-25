@@ -122,9 +122,9 @@ export default function PerfilPage() {
                             <span className="material-symbols-outlined text-slate-300 text-xl">edit</span>
                             <span className="text-sm font-medium">Editar Perfil</span>
                         </Link>
-                        <Link href="/quiz" className="flex items-center gap-4 px-5 py-4 hover:bg-white/5 transition-colors">
-                            <span className="material-symbols-outlined text-slate-300 text-xl">quiz</span>
-                            <span className="text-sm font-medium">Rehacer Cuestionario</span>
+                        <Link href="/oraculo" className="flex items-center gap-4 px-5 py-4 hover:bg-white/5 transition-colors">
+                            <span className="material-symbols-outlined text-slate-300 text-xl">auto_awesome</span>
+                            <span className="text-sm font-medium">Oráculo Diario</span>
                         </Link>
                         <Link href="#" className="flex items-center gap-4 px-5 py-4 hover:bg-white/5 transition-colors">
                             <span className="material-symbols-outlined text-slate-300 text-xl">accessibility_new</span>

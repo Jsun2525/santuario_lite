@@ -21,14 +21,10 @@ function getFirstName(user: { user_metadata?: { full_name?: string } } | null): 
 }
 
 const QUICK_ACTIONS = [
-  { href: "/tu-camino", icon: "route", title: "Tu Camino", subtitle: "Progreso y Desbloqueos" },
-  { href: "/japamala", icon: "self_improvement", title: "Japa Mala", subtitle: "Práctica Sagrada" },
-  { href: "/meditacion-libre", icon: "timer", title: "Práctica Libre", subtitle: "Cronómetro" },
-  { href: "/diario", icon: "auto_stories", title: "Diario", subtitle: "Oráculo Interior" },
-  { href: "/sonidos", icon: "graphic_eq", title: "Sonidos", subtitle: "Frecuencias" },
+  { href: "/meditacion-libre", icon: "timer", title: "Práctica Libre", subtitle: "Cronómetro Zen" },
+  { href: "/biblioteca", icon: "local_library", title: "Biblioteca", subtitle: "Meditaciones" },
   { href: "/gratitud", icon: "favorite", title: "Gratitud", subtitle: "Diario 28 Días" },
   { href: "/oraculo", icon: "auto_awesome", title: "Oráculo", subtitle: "Sabiduría Divina" },
-  { href: "/biblioteca", icon: "local_library", title: "Biblioteca", subtitle: "Meditaciones" },
 ];
 
 export default function Dashboard() {

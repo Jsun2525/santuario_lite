@@ -5,9 +5,7 @@ import { usePathname } from 'next/navigation';
 
 const tabs = [
     { label: 'Inicio', icon: 'home', href: '/', exact: true },
-    { label: 'Meditar', icon: 'self_improvement', href: '/biblioteca', exact: false },
-    { label: 'Practica', icon: 'bolt', href: '/meditacion-libre', exact: false, elevated: true },
-    { label: 'Comunidad', icon: 'groups', href: '/equipo', exact: false },
+    { label: 'Meditar', icon: 'bolt', href: '/meditacion-libre', exact: false, elevated: true },
     { label: 'Perfil', icon: 'person', href: '/perfil', exact: false },
 ];
 
@@ -30,7 +28,7 @@ export function BottomNav() {
                             <Link
                                 key={tab.href}
                                 href={tab.href}
-                                className="flex flex-col items-center justify-center w-1/5 -mt-6 transition-colors"
+                                className="flex flex-col items-center justify-center w-1/3 -mt-6 transition-colors"
                             >
                                 <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/40 border-[3px] border-[#0D0D1A]">
                                     <span className="material-symbols-outlined !text-[28px] text-white fill-[1]">
@@ -48,7 +46,7 @@ export function BottomNav() {
                         <Link
                             key={tab.href}
                             href={tab.href}
-                            className={`flex flex-col items-center justify-center w-1/5 transition-colors ${active ? 'text-[#854ef4]' : 'text-slate-500'}`}
+                            className={`flex flex-col items-center justify-center w-1/3 transition-colors ${active ? 'text-[#854ef4]' : 'text-slate-500'}`}
                         >
                             <span className={`material-symbols-outlined !text-[28px] ${active ? 'fill-[1]' : ''}`}>
                                 {tab.icon}

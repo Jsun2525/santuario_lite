@@ -6,23 +6,23 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BottomNav } from "@/components/BottomNav";
 import { useAuth } from "@/hooks/useAuth";
-import { useJournal } from "@/hooks/useJournal";
+import { useGratitude } from "@/hooks/useGratitude";
 import { useProfile } from "@/hooks/useProfile";
 
 export default function GratitudPage() {
     const [content, setContent] = useState("");
     const router = useRouter();
     const { user } = useAuth();
-    const { saveEntry } = useJournal();
+    const { saveNote } = useGratitude();
     const profile = useProfile();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!content.trim() || !user) return;
 
-        // Save entry and navigate back to journal
-        await saveEntry(content);
-        router.push("/diario");
+        // Save entry via gratitude hook
+        await saveNote(content);
+        router.push("/gratitud");
     };
 
     return (

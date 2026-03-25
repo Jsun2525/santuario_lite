@@ -83,7 +83,7 @@ export default function BibliotecaPage() {
             <main className="px-5 pb-32">
                 {/* Featured Card */}
                 <section className="mt-4">
-                    <Link href="/sonidos" className="relative block rounded-2xl overflow-hidden aspect-[4/5]">
+                    <Link href="/meditacion-libre" className="relative block rounded-2xl overflow-hidden aspect-[4/5]">
                         <Image
                             width={600}
                             height={750}
