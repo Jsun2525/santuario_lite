@@ -9,9 +9,11 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
     const [loadingMsg, setLoadingMsg] = useState("");
+    const [mode, setMode] = useState<"login" | "magic">("magic");
     const router = useRouter();
-    const { signIn, signInWithGoogle } = useAuth();
+    const { signIn, signInWithGoogle, signInWithMagicLink } = useAuth();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -34,6 +36,29 @@ export default function LoginPage() {
         }
     };
 
+    const handleMagicLink = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoadingMsg("Enviando enlace mágico...");
+        setErrorMsg("");
+        setSuccessMsg("");
+
+        if (!email) {
+            setErrorMsg("Por favor, ingresa tu email");
+            setLoadingMsg("");
+            return;
+        }
+
+        const { error } = await signInWithMagicLink(email);
+
+        if (error) {
+            setErrorMsg(error.message || "Error al enviar el enlace");
+            setLoadingMsg("");
+        } else {
+            setSuccessMsg("Revisa tu email — te enviamos un enlace mágico para entrar");
+            setLoadingMsg("");
+        }
+    };
+
     const handleGoogleLogin = async () => {
         setLoadingMsg("Conectando con Google...");
         setErrorMsg("");
@@ -46,13 +71,11 @@ export default function LoginPage() {
 
     return (
         <div className="flex flex-col min-h-screen text-slate-100 relative overflow-hidden bg-background-dark font-display">
-            {/* Background Decorative Elements */}
             <div className="fixed inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(125,48,248,0.15),transparent),radial-gradient(circle_at_bottom_left,rgba(125,48,248,0.1),transparent)]"></div>
             <div className="fixed top-[-10%] right-[-10%] w-[300px] h-[300px] bg-primary/20 blur-[120px] rounded-full pointer-events-none"></div>
             <div className="fixed bottom-[-5%] left-[-5%] w-[250px] h-[250px] bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
 
             <div className="relative z-10 flex flex-col min-h-screen w-full">
-                {/* Top Navigation */}
                 <header className="flex items-center justify-between p-6">
                     <Link href="/" className="flex items-center gap-1 text-slate-400 hover:text-white transition-colors">
                         <span className="material-symbols-outlined text-[20px]">chevron_left</span>
@@ -61,15 +84,12 @@ export default function LoginPage() {
                     <div className="w-8"></div>
                 </header>
 
-                {/* Main Content Container */}
                 <main className="flex-1 flex flex-col items-center justify-center px-6 pb-12">
-                    {/* Branding */}
                     <div className="text-center mb-10">
                         <h1 className="font-accent text-5xl md:text-6xl italic font-light tracking-tight text-white mb-2">Inner Path</h1>
                         <p className="text-primary font-light tracking-[0.3em] text-xs uppercase">Santuario de Bienestar</p>
                     </div>
 
-                    {/* Auth Glass Card */}
                     <div className="glass-card w-full max-w-[400px] p-8 rounded-xl shadow-2xl">
                         {/* Google OAuth Button */}
                         <button
@@ -92,59 +112,99 @@ export default function LoginPage() {
                             <div className="flex-1 h-px bg-white/10"></div>
                         </div>
 
-                        <form onSubmit={handleLogin} className="space-y-6">
-                            {/* Email Field */}
-                            <div className="space-y-2">
-                                <label className="text-[10px] uppercase tracking-[0.2em] text-slate-400 ml-4">Email</label>
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full bg-white/5 border border-white/10 rounded-full h-14 px-6 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-base"
-                                    placeholder="tu@email.com"
-                                />
-                            </div>
-
-                            {/* Password Field */}
-                            <div className="space-y-2">
-                                <label className="text-[10px] uppercase tracking-[0.2em] text-slate-400 ml-4">Contraseña</label>
-                                <div className="relative flex items-center">
-                                    <input
-                                        type="password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full bg-white/5 border border-white/10 rounded-full h-14 px-6 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-base pr-12"
-                                        placeholder="••••••••"
-                                    />
-                                    <button className="absolute right-4 text-slate-500 hover:text-white transition-colors" type="button">
-                                        <span className="material-symbols-outlined">visibility</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            {errorMsg && (
-                                <div className="text-red-400 text-sm text-center bg-red-900/20 p-2 rounded border border-red-500/20">
-                                    {errorMsg}
-                                </div>
-                            )}
-
-                            {/* Main Action Button */}
+                        {/* Mode Toggle */}
+                        <div className="flex gap-2 mb-6">
                             <button
-                                type="submit"
-                                disabled={!!loadingMsg}
-                                className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-14 rounded-full shadow-[0_0_20px_rgba(125,48,248,0.3)] tracking-[0.1em] text-sm uppercase transition-all active:scale-[0.98] disabled:opacity-50"
+                                onClick={() => { setMode("magic"); setErrorMsg(""); setSuccessMsg(""); }}
+                                className={`flex-1 py-2 rounded-full text-xs font-medium tracking-wide transition-all ${mode === "magic" ? "bg-primary/20 text-primary border border-primary/30" : "text-slate-500 border border-white/5"}`}
                             >
-                                {loadingMsg || "Entrar"}
+                                Enlace mágico
                             </button>
-                        </form>
-
-                        {/* Footer Toggle */}
-                        <div className="mt-8 text-center">
-                            <p className="text-slate-400 text-sm">
-                                ¿Nuevo en el santuario?
-                                <button className="text-primary font-bold ml-1 hover:underline underline-offset-4">Crear cuenta</button>
-                            </p>
+                            <button
+                                onClick={() => { setMode("login"); setErrorMsg(""); setSuccessMsg(""); }}
+                                className={`flex-1 py-2 rounded-full text-xs font-medium tracking-wide transition-all ${mode === "login" ? "bg-primary/20 text-primary border border-primary/30" : "text-slate-500 border border-white/5"}`}
+                            >
+                                Contraseña
+                            </button>
                         </div>
+
+                        {mode === "magic" ? (
+                            <form onSubmit={handleMagicLink} className="space-y-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] uppercase tracking-[0.2em] text-slate-400 ml-4">Email</label>
+                                    <input
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-full bg-white/5 border border-white/10 rounded-full h-14 px-6 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-base"
+                                        placeholder="tu@email.com"
+                                    />
+                                </div>
+
+                                {errorMsg && (
+                                    <div className="text-red-400 text-sm text-center bg-red-900/20 p-2 rounded border border-red-500/20">
+                                        {errorMsg}
+                                    </div>
+                                )}
+
+                                {successMsg && (
+                                    <div className="text-emerald-400 text-sm text-center bg-emerald-900/20 p-3 rounded border border-emerald-500/20">
+                                        {successMsg}
+                                    </div>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    disabled={!!loadingMsg}
+                                    className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-14 rounded-full shadow-[0_0_20px_rgba(125,48,248,0.3)] tracking-[0.1em] text-sm uppercase transition-all active:scale-[0.98] disabled:opacity-50"
+                                >
+                                    {loadingMsg || "Enviar enlace mágico"}
+                                </button>
+                            </form>
+                        ) : (
+                            <form onSubmit={handleLogin} className="space-y-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] uppercase tracking-[0.2em] text-slate-400 ml-4">Email</label>
+                                    <input
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-full bg-white/5 border border-white/10 rounded-full h-14 px-6 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-base"
+                                        placeholder="tu@email.com"
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] uppercase tracking-[0.2em] text-slate-400 ml-4">Contraseña</label>
+                                    <div className="relative flex items-center">
+                                        <input
+                                            type="password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            className="w-full bg-white/5 border border-white/10 rounded-full h-14 px-6 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-base pr-12"
+                                            placeholder="••••••••"
+                                        />
+                                        <button className="absolute right-4 text-slate-500 hover:text-white transition-colors" type="button">
+                                            <span className="material-symbols-outlined">visibility</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {errorMsg && (
+                                    <div className="text-red-400 text-sm text-center bg-red-900/20 p-2 rounded border border-red-500/20">
+                                        {errorMsg}
+                                    </div>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    disabled={!!loadingMsg}
+                                    className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-14 rounded-full shadow-[0_0_20px_rgba(125,48,248,0.3)] tracking-[0.1em] text-sm uppercase transition-all active:scale-[0.98] disabled:opacity-50"
+                                >
+                                    {loadingMsg || "Entrar"}
+                                </button>
+                            </form>
+                        )}
                     </div>
                 </main>
 
